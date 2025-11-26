@@ -1,0 +1,138 @@
+<html>
+
+<head>
+    <title> Benvenuto in Titolo Provvisorio </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+    <div class="loader_bg">
+        <center>
+            <div class="loader"></div>
+        </center>
+        <div class="load">
+            <h2>LOADING</h2>
+            <h2>LOADING</h2>
+        </div>
+    </div>
+
+    <img src="images/logo1.png" class="logo">
+
+    <div id="Menu1">
+        <nobr>
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="footer-col">
+                            <h4>Chi siamo</h4>
+                            <ul class="ul1">
+                                <li class="li1">
+                                    <a class="a1" href="Html/chi siamoRocco.html"><img src="images/ROCCO.png">-- Rocco</a>
+                                </li>
+                                <li class="li1">
+                                    <a class="a1" href="Html/chi siamoNicola.html"><img src="images/NICOLA.png">-- Nicola</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="footer-col">
+                            <h4>Crediti</h4>
+                            <ul class="ul1">
+                                <li class="li1"><a class="a1">Diana Borea <br>(Designer) </a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-col">
+                            <h4>contattaci</h4>
+                            <ul class="ul1">
+                                <li class="li1"><a class="a1">Nicola</a></li>
+                            </ul>
+                            <div class="social-links">
+                                <ul class="ul1">
+                                    <li class="li1">nickylongo04@gmail.com</li>
+                                </ul>
+                            </div>
+                            <ul class="ul1">
+                                <li class="li1"><a class="a1">Rocco</a></li>
+                            </ul>
+                            <div class="social-links">
+                                <ul class="ul1">
+                                    <li class="li1">roccoborea0407@gmail.com</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </nobr>
+    </div>
+
+    <div id="menuBtn1">
+        <img src="images/su.png" id="Menu2_1">
+    </div>
+
+    <div id="Menu">
+        <nav id="Lista">
+            <ul>
+                <li><a href="../index.html" class="button1"> Home </a></li>
+                <li><a href="../Html/capitolo1.html" class="button1"> Cosa &egrave; la CyberSecurity? </a></li>
+                <li><a href="../Html/capitolo2.html" class="button1"> Gli attacchi informatici </a></li>
+                <li><a href="../Html/capitolo3.html" class="button1"> Proteggere dati e privacy </a></li>
+                <li><a href="../Html/capitolo4.html" class="button1"> Hai un futuro nella cybersecurity? </a></li>
+                <li> <a href="../Html/Quiz.html" class="button1">Quiz</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div id="menuBtn">
+        <img src="images/menu.png" id="Menu2">
+    </div>
+    <div class="swiper">
+        <div class="swiper-wrapper">
+            <section id="hero">
+                <div class="navbar">
+                    <nav id="main_menu">
+                        <ul>
+                            <li><a href="../index.html" class="button1"> Home </a></li>
+                            <li><a href="Html/capitolo1.html" class="neon-button"> Cosa &egrave; la CyberSecurity? </a></li>
+                            <li><a href="Html/capitolo2.html" class="neon-button"> Gli attacchi informatici </a></li>
+                            <li><a href="Html/capitolo3.html" class="neon-button"> Proteggere dati e privacy </a></li>
+                            <li><a href="Html/capitolo4.html" class="neon-button"> Hai un futuro nella cybersecurity? </a></li>
+                            <li> <a href="Html/Quiz.html" class="neon-button">Quiz</a></li>
+                        </ul>
+                        <img class="cyber_logo" src="images/Risorsa 1.png">
+                    </nav>
+                </div>
+            </section>
+        </div>
+    </div>
+
+
+    <script src="JavaScript/Quiz.js"></script>
+    <script src="JavaScript/Script.js"></script>
+    <script src="JavaScript/Script2.js"></script>
+    <script src="JavaScript/Time out lib.js"></script>
+    <script src="JavaScript/Time out.js"></script>
+    <script src="JavaScript/swiperslide.js"></script>
+    <script>
+        const swiper = new Swiper('.swiper', {
+            loop: true,
+
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+
+            scrollbar: {
+                el: '.swiper-scrollbar',
+            },
+
+        });
+    </script>
+</body>
+
+</html>

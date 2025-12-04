@@ -100,7 +100,7 @@ nav .menu-item:nth-of-type(4):hover ~ #sub-menu-container #sub-menu-holder {
 }
 
 nav .menu-item:nth-of-type(2):hover ~ #sub-menu-container #sub-menu-holder {
-    clip-path: inset(0 7em 0 30em round 10px);
+    clip-path: inset(0 0em 0 37em round 10px);
 
 }
 nav .menu-item:nth-of-type(3):hover ~ #sub-menu-container #sub-menu-holder {
@@ -111,7 +111,7 @@ nav .menu-item:nth-of-type(1):hover ~ #sub-menu-container #sub-menu-holder {
     left: calc(-9em + -1px);
 }
 nav .menu-item:nth-of-type(2):hover ~ #sub-menu-container #sub-menu-holder {
-    left: calc(-30em + 10px);
+    left: calc(-33em + 10px);
     height: 12.3em;
 }
 nav .menu-item:nth-of-type(3):hover ~ #sub-menu-container #sub-menu-holder {
@@ -217,6 +217,7 @@ nav .menu-item:nth-of-type(4):hover ~ #sub-menu-container #sub-menu-holder {
 .menu-item .icon-box.flat {height: 1.5em;margin-bottom: 0.5em;}
 .menu-item .icon, .menu-item .text {
     float: left;
+    left: 3.3em;
     color: #afa79e;
 }
 

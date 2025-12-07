@@ -5,6 +5,7 @@
 {% block stylesheets %}
 
     <script src="javascript/mainNavbar.js" defer></script>
+
     <link rel="stylesheet" href="css/registration.css">
     {#<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">#}
 
@@ -41,9 +42,21 @@
   
                 {{ form_row(registrationForm.email) }}
                 
-                {{ form_row(registrationForm.plainPassword, {
-                    label: 'Password'
-                }) }}
+                {{ form_row(registrationForm.plainPassword, {label: 'Password'}) }}
+
+                <input type="checkbox" id="chk">
+
+                <script>
+                
+                    const passw = document.getElementById("registration_form_plainPassword");
+                    const chk = document.getElementById("chk");
+
+                    chk.onchange = function show(e) {
+                        passw.type = chk.checked ? "text" : "password";
+                    };
+                
+                </script>
+
                 {{ form_row(registrationForm.agreeTerms) }}
 
                 <button id="button" type="submit" class="btn">Registrati</button>

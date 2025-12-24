@@ -32,7 +32,8 @@ services:
       DATABASE_URL: "sqlite:///%kernel.project_dir%/var/products.db"   
       MESSENGER_TRANSPORT_DSN: doctrine://default?auto_setup=0
       MAILER_DSN: null://null
-      #STARTUP_COMMAND_1: composer install
+      STARTUP_COMMAND_1: composer install
+      STARTUP_COMMAND_2: php bin/console doctrine:migrations:migrate --no-interaction
     command: php -S 0.0.0.0:8000 -t public
     volumes: 
       - .:/var/www/html:rw

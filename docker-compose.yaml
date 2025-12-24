@@ -26,6 +26,7 @@ services:
     environment: 
       PHP_EXTENSION_PDO_SQLITE: 1
       PHP_EXTENSION_SQLITE3: 1
+      PHP_EXTENSION_INTL: 1
       APP_ENV: dev
       APP_SHARE_DIR: var/share
       DEFAULT_URI: http://localhost

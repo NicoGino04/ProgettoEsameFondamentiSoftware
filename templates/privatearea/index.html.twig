@@ -15,7 +15,13 @@
             <div class="sidebar-header">
                 <div class="pro-sidebar-logo">
                     <div>P</div>
-                    <h5>MCEM</h5>
+                    <h5>
+                        {{ app.user.email }}
+                        {% for role in app.user.roles %}
+                            <br>{{ role }}
+                        {% endfor %}
+                    </h5>
+
                 </div>
             </div>
             <div class="sidebar-content">

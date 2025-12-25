@@ -1,0 +1,42 @@
+
+services: 
+
+  # php_apache: 
+  #   image: thecodingmachine/php:8.4-v5-apache-node22
+  #   environment: 
+  #     APACHE_DOCUMENT_ROOT: public
+  #     PHP_EXTENSION_PDO_SQLITE: 1
+  #     PHP_EXTENSION_SQLITE3: 1
+  #     APP_ENV: dev
+  #     APP_SHARE_DIR: var/share
+  #     DEFAULT_URI: http://localhost
+  #     DATABASE_URL: "sqlite:///%kernel.project_dir%/var/products.db"   
+  #     MESSENGER_TRANSPORT_DSN: doctrine://default?auto_setup=0
+  #     MAILER_DSN: null://null
+  #     STARTUP_COMMAND_1: composer install
+  #   volumes: 
+  #     - .:/var/www/html:rw
+  #   ports:
+  #     - "8000:80"
+
+  php_cli: 
+    image: thecodingmachine/php:8.4-v5-cli-node22
+    working_dir: /var/www/html
+    environment: 
+      PHP_EXTENSION_PDO_SQLITE: 1
+      PHP_EXTENSION_SQLITE3: 1
+      PHP_EXTENSION_INTL: 1
+      APP_ENV: dev
+      APP_SHARE_DIR: var/share
+      DEFAULT_URI: http://localhost
+      DATABASE_URL: "sqlite:///%kernel.project_dir%/var/data.db"   
+      MESSENGER_TRANSPORT_DSN: doctrine://default?auto_setup=0
+      MAILER_DSN: null://null
+      STARTUP_COMMAND_1: composer install
+      STARTUP_COMMAND_2: php bin/console doctrine:migrations:migrate --no-interaction
+    command: php -S 0.0.0.0:8000 -t public
+    volumes: 
+      - .:/var/www/html:rw
+    ports:
+      - "8001:8000"
+

@@ -8,21 +8,21 @@
     <tbody>
             <tr>
                 <th>Name</th>
-                <td>{{ product.name }}</td>
+                <td>{{ goal.name }}</td>
             </tr>
             <tr>
-                <th>Description</th>
-                <td>{{ product.description }}</td>
+                <th>Quantity</th>
+                <td>{{ goal.quantity }} di {{ goal.goalQuantity }}</td>
             </tr>
             <tr>
-                <th>Size</th>
-                <td>{{ product.size }}</td>
+                <th>Expiration</th>
+                <td>{{ goal.expiration|date("d/m/Y") }}</td>
             </tr>
     </tbody>
 </table>
 
-<a href="{{ path('product_edit', {'id': product.id}) }}">Edit</a>
+<a href="{{ path('goal_edit', {'id': goal.id}) }}">Edit</a>
 
-<a href="{{ path('product_delete', {'id': product.id}) }}">Delete</a>
+<a href="{{ path('goal_delete', {'id': goal.id}) }}">Delete</a>
 
 {% endblock %}

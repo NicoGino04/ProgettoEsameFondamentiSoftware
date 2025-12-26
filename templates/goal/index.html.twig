@@ -6,7 +6,7 @@
 
 <h1> Goals </h1>
 
-<a href="{{ path('product_new') }}">Nuovo Obiettivo</a>
+<a href="{{ path('goal_new') }}">Nuovo Obiettivo</a>
 
 <table>
     <thead>
@@ -20,11 +20,11 @@
         {% for goal in goals %}
             <tr>
                 <td>
-                    <a href="{{ path('product_show', {'id': goal.id}) }}">
+                    <a href="{{ path('goal_show', {'id': goal.id}) }}">
                         {{ goal.name }}
                     </a>
                 </td>
-                <td>{{ goal.quantity }}</td>
+                <td>{{ goal.quantity }} di {{ goal.goalQuantity }}</td>
                 <td>{{ goal.expiration|date("d/m/Y") }}</td>
             </tr>
         {% endfor %}

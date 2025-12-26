@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Repository\ProductRepository;
-use App\Form\ProductType;
+use App\Form\GoalType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -33,50 +33,53 @@ final class GoalController extends AbstractController
 
         $user = $this->getUser();
         $goals = $user->getGoals();
-        return $this->render('product/index.html.twig', [
+        return $this->render('goal/index.html.twig', [
             'goals' => $goals,
         ]);
         
     }
 
-    #[Route('/product/{id<\d+>}',name:'product_show')]
-    public function show(Product $product): Response
+    #[Route('/goal/{id<\d+>}',name:'goal_show')]
+    public function show(Goal $goal): Response
     {
-        return $this->render('product/show.html.twig', [
-            'product'=> $product
+        return $this->render('goal/show.html.twig', [
+            'goal'=> $goal
         ]);
     }
 
-    #[Route('/product/new', name:'product_new')]
+    #[Route('/goal/new', name:'goal_new')]
     public function new(Request $request, EntityManagerInterface $manager): Response
     {
-        $product = new Product;
+        $goal = new Goal();
 
-        $form = $this->createForm(ProductType::class, $product);
+        $form = $this->createForm(GoalType::class, $goal);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $manager->persist($product);
+            
+            $user = $this->getUser();
+            $user->addGoal($goal);
 
+            $manager->persist($user);
             $manager->flush();
 
             $this->addFlash(
                 'notice',
-                'Product created successfully!'
+                'Goal created successfully!'
             );
 
-            return $this->redirectToRoute('product_show', [
-                'id'=> $product->getId()
+            return $this->redirectToRoute('goal_show', [
+                'id'=> $goal->getId()
             ]);
         }
 
-        return $this->render('product/new.html.twig',[
+        return $this->render('goal/new.html.twig',[
             'form'=> $form,
         ]);
     }
 
-    #[Route('/product/{id<\d+>}/edit', name:'product_edit')]
+    #[Route('/goal/{id<\d+>}/edit', name:'goal_edit')]
     public function edit(Product $product,Request $request, EntityManagerInterface $manager): Response
     {
         $form = $this->createForm(ProductType::class, $product);
@@ -102,7 +105,7 @@ final class GoalController extends AbstractController
         ]);
     }
 
-    #[Route('/product/{id<\d+>}/delete', name:'product_delete')]
+    #[Route('/goal/{id<\d+>}/delete', name:'goal_delete')]
     public function delete(Product $product, Request $request, EntityManagerInterface $manager): Response
     {
         if ($request->isMethod('POST')) {

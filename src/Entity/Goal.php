@@ -17,7 +17,7 @@ class Goal
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::BIGINT)]
+    #[ORM\Column(type: Types::BIGINT, options: ['default' => 0])]
     private ?string $quantity = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
@@ -26,7 +26,7 @@ class Goal
     #[ORM\Column(type: Types::BIGINT)]
     private ?string $goalQuantity = null;
 
-    #[ORM\ManyToOne(inversedBy: 'goals')]
+    #[ORM\ManyToOne(inversedBy: 'goals', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 

@@ -18,7 +18,7 @@ class Goal
     private ?string $name = null;
 
     #[ORM\Column(type: Types::BIGINT, options: ['default' => 0])]
-    private ?string $quantity = null;
+    private ?string $quantity = '0';
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTime $expiration = null;

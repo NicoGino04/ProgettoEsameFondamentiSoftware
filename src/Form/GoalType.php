@@ -16,7 +16,6 @@ class GoalType extends AbstractType
         $builder
             ->add('name')
             ->add('quantity', IntegerType::class, [
-                'data' => 0,
                 'empty_data' => 0
             ])
             ->add('goalQuantity')

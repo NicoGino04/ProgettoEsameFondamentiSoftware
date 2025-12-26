@@ -80,9 +80,9 @@ final class GoalController extends AbstractController
     }
 
     #[Route('/goal/{id<\d+>}/edit', name:'goal_edit')]
-    public function edit(Product $product,Request $request, EntityManagerInterface $manager): Response
+    public function edit(Goal $goal,Request $request, EntityManagerInterface $manager): Response
     {
-        $form = $this->createForm(ProductType::class, $product);
+        $form = $this->createForm(GoalType::class, $goal);
 
         $form->handleRequest($request);
 
@@ -95,22 +95,22 @@ final class GoalController extends AbstractController
                 'Product updated successfully!'
             );
 
-            return $this->redirectToRoute('product_show', [
-                'id'=> $product->getId()
+            return $this->redirectToRoute('goal_show', [
+                'id'=> $goal->getId()
             ]);
         }
 
-        return $this->render('product/edit.html.twig',[
+        return $this->render('goal/edit.html.twig',[
             'form'=> $form,
         ]);
     }
 
     #[Route('/goal/{id<\d+>}/delete', name:'goal_delete')]
-    public function delete(Product $product, Request $request, EntityManagerInterface $manager): Response
+    public function delete(Goal $goal, Request $request, EntityManagerInterface $manager): Response
     {
         if ($request->isMethod('POST')) {
 
-            $manager->remove($product);
+            $manager->remove($goal);
 
             $manager->flush();
 
@@ -119,12 +119,12 @@ final class GoalController extends AbstractController
                 'Product deleted successfully!'
             );
 
-            return $this->redirectToRoute('product_index');
+            return $this->redirectToRoute('goal_index');
 
         }
 
-        return $this->render('product/delete.html.twig', [
-            'id' => $product->getId(),
+        return $this->render('goal/delete.html.twig', [
+            'id' => $goal->getId(),
         ]);
     }
 }

@@ -27,9 +27,9 @@ class UserBase extends Fixture implements FixtureGroupInterface
     {
 
         $user = new User();
-        $user->setEmail("tu@tu.tu");
+        $user->setEmail("lui@lui.lui");
         $user->setPassword(
-            $this->userPasswordHasher->hashPassword($user, "tututu")
+            $this->userPasswordHasher->hashPassword($user, "luilui")
         );
         $user->setRoles(["ROLE_ADMIN"]);
 

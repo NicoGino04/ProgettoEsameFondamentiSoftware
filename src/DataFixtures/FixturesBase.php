@@ -4,18 +4,25 @@ namespace App\DataFixtures;
 
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Goal;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class AppFixtures extends Fixture
+class FixturesBase extends Fixture implements FixtureGroupInterface
 {
 
     public function __construct (
-        private readonly UserPasswordHasherInterface $userPasswordHasher)
+        private readonly UserPasswordHasherInterface $userPasswordHasher
+    )
     {
-
     }
+
+    public static function getGroups(): array
+    {
+        return ['datiBase'];
+    }
+
     public function load(ObjectManager $manager): void
     {
         $user = new User();

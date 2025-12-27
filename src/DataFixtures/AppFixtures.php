@@ -6,14 +6,23 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Goal;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+
+    public function __construct (
+        private readonly UserPasswordHasherInterface $userPasswordHasher)
+    {
+
+    }
     public function load(ObjectManager $manager): void
     {
         $user = new User();
         $user->setEmail("tu@tu.tu");
-        $user->setPassword("tututu");
+        $user->setPassword(
+            $this->userPasswordHasher->hashPassword($user, "tututu")
+        );
         $user->setRoles(["ROLE_ADMIN"]);
 
         $goal = new Goal();
@@ -36,7 +45,9 @@ class AppFixtures extends Fixture
 
         $user = new User();
         $user->setEmail("io@io.io");
-        $user->setPassword("ioioio");
+        $user->setPassword(
+            $this->userPasswordHasher->hashPassword($user, "ioioio")
+        );
         $user->setRoles(["ROLE_USER"]);
 
         $goal = new Goal();

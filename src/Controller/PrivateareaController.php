@@ -18,4 +18,21 @@ final class PrivateareaController extends AbstractController
             'controller_name' => 'PrivateareaController',
         ]);
     }
+
+    #[Route('/accountarea', name: 'account_page')]
+    public function accountArea(): Response
+    {
+        return $this->render('privatearea/account.html.twig', [
+            'controller_name' => 'PrivateareaController',
+        ]);
+    }
+
+    #[Route('/graphicsarea', name: 'graphics_page')]
+    public function graphicsArea(): Response
+    {
+        return $this->render('privatearea/graphics.html.twig', [
+            'controller_name' => 'PrivateareaController',
+        ]);
+    }
+
 }

@@ -25,6 +25,8 @@
     align-items: flex-start;
     justify-content: space-between;
     padding: 1.5rem 1.25rem 1rem 1.25rem;
+    border-bottom: 1px solid var(--c-border-primary);
+    padding-bottom: 1rem;
 }
 
 .cardPB-header>div {
@@ -68,7 +70,7 @@
 .pb-item label {
     font-weight: 500;
     display: block;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.7rem; /* spazio tra nome task e pb */
 }
 
 
@@ -155,5 +157,29 @@ progress[value]::after {
     }
     to {
         --progress-value: var(--value);
+    }
+}
+.dashboard-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+/* Colonna sinistra */
+.dashboard-left {
+    flex: 0 0 380px; /* larghezza fissa = cardPB */
+}
+
+/* Colonna destra */
+.dashboard-right {
+    flex: 1;
+}
+@media (max-width: 1200px) {
+    .dashboard-layout {
+        flex-direction: column;
+    }
+
+    .dashboard-left {
+        width: 100%;
     }
 }

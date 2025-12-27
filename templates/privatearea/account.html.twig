@@ -15,9 +15,10 @@
             <div class="sidebar-header">
                 <div class="pro-sidebar-logo">
                     <div>P</div>
-                    <h5>Ciao, <br>
+                    <h5>
                         {{ app.user.email }}
                         {% for role in app.user.roles %}
+                            <br>{{ role }}
                         {% endfor %}
                     </h5>
 
@@ -44,7 +45,11 @@
                                             <span class="menu-title">Home</span>
                                         </a>
                                     </li>
-                                    
+                                    <li class="menu-item">
+                                        <a href="{{ logout_path() }}">
+                                            <span class="menu-title">Logout</span>
+                                        </a>
+                                    </li>
                                     <li class="menu-item sub-menu">
                                         <a href="#">
                                             <span class="menu-title">Forms</span>
@@ -201,47 +206,17 @@
                             </div>
                         </li>
                         <li class="menu-header" style="padding-top: 20px"><span> EXTRA </span></li>
-                        <li class="menu-item sub-menu">
+                        <li class="menu-item">
                             <a href="#">
                                 <span class="menu-icon">
-                      <i class="ri-bar-chart-2-fill"></i>
+                      <i class="ri-book-2-fill"></i>
                     </span>
                                 <span class="menu-title">Account</span>
+                                <span class="menu-suffix">
+                      <span class="badge secondary">Beta</span>
+                                </span>
                             </a>
-
-                        
-
-
-                            <div class="sub-menu-list">
-                                <ul>
-                                    <li class="menu-item">
-                                        <a href="{{ asset('templates\privatearea\account.html.twig') }}">
-                                            <span class="menu-title">
-                                                {{ app.user.email }}
-                                                {% for role in app.user.roles %}
-                                                {% endfor %}
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item">
-                                        <a href="#">
-                                            <span class="menu-title">Cambia Account</span>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item">
-                                        <a href="{{ logout_path() }}">
-                                            <span class="menu-title">LogOut</span>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item">
-                                        <a href="#">
-                                            <span class="menu-title">Impostazioni</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
                         </li>
-                        
                         <li class="menu-item">
                             <a href="#">
                                 <span class="menu-icon">
@@ -338,7 +313,7 @@
                                         <article class="card">
                                             <div class="card-header">
                                                 <div>
-                                                    <span><img src="{{ asset('images/icons/iconB3.png') }}" /></span>
+                                                    <span><img src="{{ asset('images/icons/iconB2.png') }}" /></span>
                                                     <h3>Bicchieri d'acqua</h3>
                                                 </div>
                                             </div>
@@ -360,7 +335,7 @@
                                         <article class="card">
                                             <div class="card-header">
                                                 <div>
-                                                    <span><img src="{{ asset('images/icons/iconM3.png') }}" /></span>
+                                                    <span><img src="{{ asset('images/icons/iconM2.png') }}" /></span>
                                                     <h3>Ore di sonno</h3>
                                                 </div>
                                             </div>
@@ -381,7 +356,7 @@
                                         <article class="card">
                                             <div class="card-header">
                                                 <div>
-                                                    <span><img src="{{ asset('images/icons/iconS2.png') }}" /></span>
+                                                    <span><img src="{{ asset('images/icons/iconS1.png') }}" /></span>
                                                     <h3>Ore di sole</h3>
                                                 </div>
                                             </div>

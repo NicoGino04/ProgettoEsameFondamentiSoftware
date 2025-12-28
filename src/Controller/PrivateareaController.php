@@ -3,18 +3,60 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Goal;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 
 final class PrivateareaController extends AbstractController
 {
     #[Route('/privatearea', name: 'app_privatearea')]
     public function index(): Response
     {
+
+        $user = $this->getUser();
+        //$goals = $user->getGoals()->slice(0,5);
+        /* @var Goal $goal */
+        $topGoals = $user->getGoals()->filter(static fn ($goal): bool => $goal->getQuantity()*100/$goal->getGoalQuantity() > 35);
+        $bottomGoals = $user->getGoals()->filter(static fn ($goal): bool => $goal->getQuantity()*100/$goal->getGoalQuantity() <= 20);
+
+        $topGoals = $topGoals->toArray();
+        $bottomGoals = $bottomGoals->toArray();
+
+        usort($topGoals, function (Goal $a, Goal $b): int {
+            $valA = $a->getQuantity()*100/$a->getGoalQuantity();
+            $valB = $b->getQuantity()*100/$b->getGoalQuantity();
+            return $valB - $valA;
+        });
+
+        usort($bottomGoals, function (Goal $a, Goal $b): int {
+            $valA = $a->getQuantity()*100/$a->getGoalQuantity();
+            $valB = $b->getQuantity()*100/$b->getGoalQuantity();
+            return $valA - $valB;
+        });
+
+        $topGoals = array_slice($topGoals, 0, 5);
+        $bottomGoals = array_slice($bottomGoals, 0, 5);
+
+
+        /*
+        $criteria = Criteria::create()
+            ->orderBy(['nomeCampo' => Order::Descending]);
+        $topGoals = $topGoals->matching($criteria);
+
+        $criteria = Criteria::create()
+            ->orderBy(['nomeCampo' => Order::Ascending]);
+        $bottomGoals = $bottomGoals->matching($criteria);
+        */
+
         return $this->render('privatearea/index.html.twig', [
+            'topGoals' => $topGoals,
+            'bottomGoals' => $bottomGoals,
             'controller_name' => 'PrivateareaController',
         ]);
     }

@@ -1,0 +1,39 @@
+.donut-card {
+    max-width: 600px;      
+    min-height: 500px;     
+    flex: none;            /* non si restringe nella griglia */
+    background-color: #fdfcff;
+    border-radius: 15px;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.05), 0 5px 15px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* HEADER DELLA CARD */
+.donut-card-header {
+    display: flex;
+    align-items: center;
+    padding: 0.7rem 1.25rem;
+    border-bottom: 1px solid #eff1f6;
+}
+
+.donut-card-header h3 {
+    margin-left: 0.75rem;
+    font-weight: 500;
+}
+
+/* BODY DELLA CARD CON GRAFICO */
+.donut-card-body {
+    height: 450px;               /* altezza della card */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3px 30px;               /* spazio interno tra il canvas e i bordi */
+    box-sizing: border-box;      /* assicura che il padding sia incluso nelle dimensioni */
+}
+
+.donut-card-body canvas { /*serve per lasciare un po di bordo intorno al grafico*/
+    width: 80%; 
+    height: 80%;
+}

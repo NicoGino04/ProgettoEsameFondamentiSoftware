@@ -4,7 +4,7 @@
     
     position: relative;
     top: 4em;
-    left: 55%;
+    left: 47vw;
     width: 700px;
     height: 500px;
     border-radius: 12px;
@@ -151,10 +151,11 @@
     cursor: grab;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1500px) {
     .slider {
+        top: 250px;
         width: 95vw;
-        height: 60vh;
+        height: 400px;
         left: 2.5vw;
     }
     

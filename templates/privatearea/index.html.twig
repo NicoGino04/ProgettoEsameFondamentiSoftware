@@ -300,35 +300,41 @@
                                         <div class="cardPB-header">
                                             <div>
                                                 <span><img src="{{ asset('images/icons/iconPB1.png') }}" alt=""></span>
-                                                <h3>Achivements</h3>
+                                                <h3>Obiettivi Over 35%</h3>
                                             </div>
                                         </div>
 
                                         <div class="cardPB-body">
-                                            <div class="pb-item">
-                                                <label>Bicchieri d'acqua (10)</label>
-                                                <progress value="0" max="100" style="--value: 0; --max: 100;"></progress>
-                                            </div>
 
-                                            <div class="pb-item">
-                                                <label>Ora di attività fisica (week)</label>
-                                                <progress value="25" max="100" style="--value: 25; --max: 100;"></progress>
-                                            </div>
+                                            {% for goal in topGoals %}
+                                                {% set quantity = goal.quantity*100/goal.goalQuantity %}
+                                                <div class="pb-item">
+                                                    <label>{{ goal.name }} ({{ goal.goalQuantity }})</label>
+                                                    <progress value="{{ quantity }}" max="100" style="--value: {{ quantity }}; --max: 100;"></progress>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </aside>
 
-                                            <div class="pb-item">
-                                                <label>Task 3</label>
-                                                <progress value="50" max="100" style="--value: 50; --max: 100;"></progress>
+                                <aside class="dashboard-left">
+                                    <div class="cardPB">
+                                        <div class="cardPB-header">
+                                            <div>
+                                                <span><img src="{{ asset('images/icons/iconPB1.png') }}" alt=""></span>
+                                                <h3>Obiettivi Under 20%</h3>
                                             </div>
+                                        </div>
 
-                                            <div class="pb-item">
-                                                <label>Task 4</label>
-                                                <progress value="75" max="100" style="--value: 75; --max: 100;"></progress>
-                                            </div>
+                                        <div class="cardPB-body">
 
-                                            <div class="pb-item">
-                                                <label>Task 5</label>
-                                                <progress value="100" max="100" style="--value: 100; --max: 100;"></progress>
-                                            </div>
+                                            {% for goal in bottomGoals %}
+                                                {% set quantity = goal.quantity*100/goal.goalQuantity %}
+                                                <div class="pb-item">
+                                                    <label>{{ goal.name }} ({{ goal.goalQuantity }})</label>
+                                                    <progress value="{{ quantity }}" max="100" style="--value: {{ quantity }}; --max: 100;"></progress>
+                                                </div>
+                                            {% endfor %}
                                         </div>
                                     </div>
                                 </aside>

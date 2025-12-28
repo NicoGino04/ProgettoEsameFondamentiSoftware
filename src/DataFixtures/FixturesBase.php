@@ -31,6 +31,14 @@ class FixturesBase extends Fixture implements FixtureGroupInterface
             $this->userPasswordHasher->hashPassword($user, "tututu")
         );
         $user->setRoles(["ROLE_ADMIN"]);
+        $user->setAltezza("1.72");
+        $user->setMisuraAltezza("m");
+        $user->setPeso("60.0");
+        $user->setMisuraPeso("kg");
+        $user->setEtà("25");
+        $user->setSesso("maschio");
+        $user->setBasale();
+
 
         $goal = new Goal();
         $goal->setName("Bicchieri d'acqua");
@@ -56,6 +64,13 @@ class FixturesBase extends Fixture implements FixtureGroupInterface
             $this->userPasswordHasher->hashPassword($user, "ioioio")
         );
         $user->setRoles(["ROLE_USER"]);
+        $user->setAltezza("1.70");
+        $user->setMisuraAltezza("m");
+        $user->setPeso("52.2");
+        $user->setMisuraPeso("kg");
+        $user->setEtà("23");
+        $user->setSesso("femmina");
+        $user->setBasale();
 
         $goal = new Goal();
         $goal->setName("Bicchieri d'acqua");

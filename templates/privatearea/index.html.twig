@@ -307,10 +307,10 @@
                                         <div class="cardPB-body">
 
                                             {% for goal in topGoals %}
-                                                {% set quantity = goal.quantity*100/goal.goalQuantity %}
+                                                {% set percentage = goal.getPercentage() %}
                                                 <div class="pb-item">
                                                     <label>{{ goal.name }} ({{ goal.goalQuantity }})</label>
-                                                    <progress value="{{ quantity }}" max="100" style="--value: {{ quantity }}; --max: 100;"></progress>
+                                                    <progress value="{{ percentage }}" max="100" style="--value: {{ percentage }}; --max: 100;"></progress>
                                                 </div>
                                             {% endfor %}
                                         </div>
@@ -329,10 +329,10 @@
                                         <div class="cardPB-body">
 
                                             {% for goal in bottomGoals %}
-                                                {% set quantity = goal.quantity*100/goal.goalQuantity %}
+                                                {% set percentage = goal.getPercentage() %}
                                                 <div class="pb-item">
                                                     <label>{{ goal.name }} ({{ goal.goalQuantity }})</label>
-                                                    <progress value="{{ quantity }}" max="100" style="--value: {{ quantity }}; --max: 100;"></progress>
+                                                    <progress value="{{ percentage }}" max="100" style="--value: {{ percentage }}; --max: 100;"></progress>
                                                 </div>
                                             {% endfor %}
                                         </div>

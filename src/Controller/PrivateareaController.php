@@ -22,35 +22,39 @@ final class PrivateareaController extends AbstractController
         $user = $this->getUser();
         //$goals = $user->getGoals()->slice(0,5);
         /* @var Goal $goal */
+        //topGoals = obiettivi sopra il 35%
         $topGoals = $user->getGoals()->filter(static fn ($goal): bool => $goal->getQuantity()*100/$goal->getGoalQuantity() > 35);
-        $bottomGoals = $user->getGoals()->filter(static fn ($goal): bool => $goal->getQuantity()*100/$goal->getGoalQuantity() <= 20);
+        //bottomGoals = obiettivi sotto il 20
+        $bottomGoals = $user->getGoals()->filter(static fn ($goal): bool => $goal->getQuantity()*100/$goal->getGoalQuantity() < 20);
 
         $topGoals = $topGoals->toArray();
         $bottomGoals = $bottomGoals->toArray();
 
+        //ordinamento topGoals in descending
         usort($topGoals, function (Goal $a, Goal $b): int {
             $valA = $a->getQuantity()*100/$a->getGoalQuantity();
             $valB = $b->getQuantity()*100/$b->getGoalQuantity();
             return $valB - $valA;
         });
 
+        //ordinamento bottomGoals in ascending
         usort($bottomGoals, function (Goal $a, Goal $b): int {
             $valA = $a->getQuantity()*100/$a->getGoalQuantity();
             $valB = $b->getQuantity()*100/$b->getGoalQuantity();
             return $valA - $valB;
         });
 
+        //selezione esclusiva dei primi 5 elementi
         $topGoals = array_slice($topGoals, 0, 5);
         $bottomGoals = array_slice($bottomGoals, 0, 5);
 
-
         /*
         $criteria = Criteria::create()
-            ->orderBy(['nomeCampo' => Order::Descending]);
+            ->orderBy(['quantity' => Order::Descending]);
         $topGoals = $topGoals->matching($criteria);
 
         $criteria = Criteria::create()
-            ->orderBy(['nomeCampo' => Order::Ascending]);
+            ->orderBy(['quantity' => Order::Ascending]);
         $bottomGoals = $bottomGoals->matching($criteria);
         */
 

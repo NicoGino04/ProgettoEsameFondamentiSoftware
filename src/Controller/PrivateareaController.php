@@ -23,24 +23,24 @@ final class PrivateareaController extends AbstractController
         //$goals = $user->getGoals()->slice(0,5);
         /* @var Goal $goal */
         //topGoals = obiettivi sopra il 35%
-        $topGoals = $user->getGoals()->filter(static fn ($goal): bool => $goal->getQuantity()*100/$goal->getGoalQuantity() > 35);
+        $topGoals = $user->getGoals()->filter(static fn ($goal): bool => $goal->getPercentage() > 35);
         //bottomGoals = obiettivi sotto il 20
-        $bottomGoals = $user->getGoals()->filter(static fn ($goal): bool => $goal->getQuantity()*100/$goal->getGoalQuantity() < 20);
+        $bottomGoals = $user->getGoals()->filter(static fn ($goal): bool => $goal->getPercentage() < 20);
 
         $topGoals = $topGoals->toArray();
         $bottomGoals = $bottomGoals->toArray();
 
         //ordinamento topGoals in descending
         usort($topGoals, function (Goal $a, Goal $b): int {
-            $valA = $a->getQuantity()*100/$a->getGoalQuantity();
-            $valB = $b->getQuantity()*100/$b->getGoalQuantity();
+            $valA = $a->getPercentage();
+            $valB = $b->getPercentage();
             return $valB - $valA;
         });
 
         //ordinamento bottomGoals in ascending
         usort($bottomGoals, function (Goal $a, Goal $b): int {
-            $valA = $a->getQuantity()*100/$a->getGoalQuantity();
-            $valB = $b->getQuantity()*100/$b->getGoalQuantity();
+            $valA = $a->getPercentage();
+            $valB = $b->getPercentage();
             return $valA - $valB;
         });
 

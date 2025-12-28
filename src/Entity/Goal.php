@@ -94,4 +94,10 @@ class Goal
 
         return $this;
     }
+
+    public function getPercentage(): int
+    {
+        return $this->getQuantity()*100/$this->getGoalQuantity();
+    }
+
 }

@@ -41,6 +41,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Goal::class, mappedBy: 'user', orphanRemoval: true, cascade: ['persist'])]
     private Collection $goals;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $età = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $peso = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $altezza = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $basale = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $sesso = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $misuraPeso = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $misuraAltezza = null;
+
     public function __construct()
     {
         $this->goals = new ArrayCollection();
@@ -147,6 +168,97 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $goal->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEtà(): ?int
+    {
+        return $this->età;
+    }
+
+    public function setEtà(?int $età): static
+    {
+        $this->età = $età;
+
+        return $this;
+    }
+
+    public function getPeso(): ?float
+    {
+        return $this->peso;
+    }
+
+    public function setPeso(?float $peso): static
+    {
+        $this->peso = $peso;
+
+        return $this;
+    }
+
+    public function getAltezza(): ?float
+    {
+        return $this->altezza;
+    }
+
+    public function setAltezza(?float $altezza): static
+    {
+        $this->altezza = $altezza;
+
+        return $this;
+    }
+
+    public function getBasale(): ?float
+    {
+        return $this->basale;
+    }
+
+    public function setBasale(): static
+    {
+        if ($this->getSesso() == "maschio"){
+            $basale = 66.5 + (13.75*$this->getPeso()) + (5.003*$this->getAltezza()) - (6.775*$this->getEtà());
+        }
+        elseif ($this->getSesso() == "femmina"){
+            $basale = 655.1 + (9.5663*$this->getPeso()) + (1.85*$this->getAltezza()) - (4.676*$this->getEtà());
+        }
+
+        $this->basale = $basale;
+
+        return $this;
+    }
+
+    public function getSesso(): ?string
+    {
+        return $this->sesso;
+    }
+
+    public function setSesso(?string $sesso): static
+    {
+        $this->sesso = $sesso;
+
+        return $this;
+    }
+
+    public function getMisuraPeso(): ?string
+    {
+        return $this->misuraPeso;
+    }
+
+    public function setMisuraPeso(?string $misuraPeso): static
+    {
+        $this->misuraPeso = $misuraPeso;
+
+        return $this;
+    }
+
+    public function getMisuraAltezza(): ?string
+    {
+        return $this->misuraAltezza;
+    }
+
+    public function setMisuraAltezza(?string $misuraAltezza): static
+    {
+        $this->misuraAltezza = $misuraAltezza;
 
         return $this;
     }

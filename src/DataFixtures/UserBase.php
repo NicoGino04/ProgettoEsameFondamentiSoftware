@@ -32,6 +32,13 @@ class UserBase extends Fixture implements FixtureGroupInterface
             $this->userPasswordHasher->hashPassword($user, "luilui")
         );
         $user->setRoles(["ROLE_ADMIN"]);
+        $user->setAltezza("1.72");
+        $user->setMisuraAltezza("m");
+        $user->setPeso("60.0");
+        $user->setMisuraPeso("kg");
+        $user->setEtà("25");
+        $user->setSesso("maschio");
+        $user->setBasale();
 
        for ($i = 0; $i <= 49; ++$i) {
 

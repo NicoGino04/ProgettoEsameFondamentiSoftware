@@ -37,3 +37,14 @@
     width: 80%; 
     height: 80%;
 }
+.donut-card .card-header {
+    all: unset;
+}
+.donut-card .donut-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}

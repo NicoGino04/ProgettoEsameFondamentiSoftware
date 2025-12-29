@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %} {% block title %}AreaPrivata!{% endblock %} {% block stylesheets %}
 
 <link rel="stylesheet" href="css/APnavbar.css">
-<link rel="stylesheet" href="css/APmealcard.css">
 <link rel="stylesheet" href="css/APcard.css">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="css/APprogbar.css"> {% endblock %} {% block body %}
@@ -46,11 +45,10 @@
                                         </a>
                                     </li>
                                     <li class="menu-item">
-                                        <a href="">
+                                        <a href="{{path('app_privatearea')}}">
                                             <span class="menu-title">Home</span>
                                         </a>
                                     </li>
-
                                     <li class="menu-item sub-menu">
                                         <a href="#">
                                             <span class="menu-title">Forms</span>
@@ -123,7 +121,7 @@
                                         </a>
                                     </li>
                                     <li class="menu-item">
-                                        <a href="{{path("line_graphics_page")}}">
+                                        <a href="#">
                                             <span class="menu-title">Line chart</span>
                                         </a>
                                     </li>
@@ -293,205 +291,49 @@
         <a id="btn-toggle" class="header-toggle">
             <i class="ri-menu-line"></i>
         </a>
-                        </div>
-                        <div class="content-main">
-
-
-
-
-                            <div class="dashboard-layout">
-                                
-                                <aside class="dashboard-left">
-                                <article class="card donut-card">
-                                    <div class="donut-card-header">
-                                        <div>
-                                            <h3>Micronutrienti</h3>
-                                        </div>
-                                    </div>
-                                    <div class="donut-card-body">
-                                        <canvas id="myDoughnutChart"></canvas>
-                                    </div>
-
-                                    <div class="card-footer">
-                                        <span style="font-size: 0.8rem; color: var(--c-text-secondary);">
-                                            More
-                                        </span>
-                                    </div>
-                                </article>
-                                    <div class="cardPB">
-                                        <div class="cardPB-header">
-                                            <div>
-                                                <span><img src="{{ asset('images/icons/iconPB1.png') }}" alt=""></span>
-                                                <h3>Obiettivi Over 35%</h3>
-                                            </div>
-                                        </div>
-
-                                        <div class="cardPB-body">
-
-                                            {% for goal in topGoals %}
-                                                {% set percentage = goal.getPercentage() %}
-                                                <div class="pb-item">
-                                                    <label>{{ goal.name }} ({{ goal.goalQuantity }})</label>
-                                                    <progress value="{{ percentage }}" max="100" style="--value: {{ percentage }}; --max: 100;"></progress>
-                                                </div>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-                                </aside>
-<!--
-                                <aside class="dashboard-left">
-                                    <div class="cardPB">
-                                        <div class="cardPB-header">
-                                            <div>
-                                                <span><img src="{{ asset('images/icons/iconPB1.png') }}" alt=""></span>
-                                                <h3>Obiettivi Under 20%</h3>
-                                            </div>
-                                        </div>
-
-                                        <div class="cardPB-body">
-
-                                            {% for goal in bottomGoals %}
-                                                {% set percentage = goal.getPercentage() %}
-                                                <div class="pb-item">
-                                                    <label>{{ goal.name }} ({{ goal.goalQuantity }})</label>
-                                                    <progress value="{{ percentage }}" max="100" style="--value: {{ percentage }}; --max: 100;"></progress>
-                                                </div>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-                                </aside>
--->
-                                <section class="dashboard-right">
-                                    <div class="card-grid">
-                                        <article class="card">
-                                            <div class="card-header">
-                                                <div>
-                                                    <span><img src="{{ asset('images/icons/iconB3.png') }}" /></span>
-                                                    <h3>Bicchieri d'acqua</h3>
-                                                </div>
-                                            </div>
-                                            <div class="card-body">
-                                                <p>Quanti bicchieri d'acqua hai bevuto oggi?</p>
-                                                <div class="counter">
-                                                    <button class="decrease">-</button>
-                                                    <span class="count">0</span>
-                                                    <button class="increase">+</button>
-                                                </div>
-                                            </div>
-                                            <div class="card-footer">
-                                                <button class="save-btn">Salva</button>
-                                            </div>
-                                        </article>
-
-
-
-                                        <article class="card">
-                                            <div class="card-header">
-                                                <div>
-                                                    <span><img src="{{ asset('images/icons/iconM3.png') }}" /></span>
-                                                    <h3>Ore di sonno</h3>
-                                                </div>
-                                            </div>
-                                            <div class="card-body">
-                                                <p>Quante ore di sonno hai fatto?</p>
-                                                <div class="counter">
-                                                    <button class="decrease">-</button>
-                                                    <span class="count">0</span>
-                                                    <button class="increase">+</button>
-                                                </div>
-                                            </div>
-                                            <div class="card-footer">
-                                                <button class="save-btn">Salva</button>
-                                            </div>
-                                        </article>
-
-
-                                        <article class="card">
-                                            <div class="card-header">
-                                                <div>
-                                                    <span><img src="{{ asset('images/icons/iconS2.png') }}" /></span>
-                                                    <h3>Ore di sole</h3>
-                                                </div>
-                                            </div>
-                                            <div class="card-body">
-                                                <p>Quante ore di sole hai fatto?</p>
-                                                <div class="counter">
-                                                    <button class="decrease">-</button>
-                                                    <span class="count">0</span>
-                                                    <button class="increase">+</button>
-                                                </div>
-                                            </div>
-                                            <div class="card-footer">
-                                                <button class="save-btn">Salva</button>
-                                            </div>
-                                        </article>
-                                        <article class="card meal-selector-card">
-                                        
-                                            <div class="meal-selector-header">
-                                            
-                                                <h3>Selezione pasti</h3>
-                                                
-                                            </div>
-
-                                            <div class="meal-selector-body">
-                                                <div class="meal-row">
-                                                <label for="colazione">Colazione</label>
-                                                <select id="colazione" name="colazione">
-                                                    <option value="">Seleziona...</option>
-                                                    <option value="proteica">Proteica</option>
-                                                    <option value="light">Light</option>
-                                                    <option value="normale">Normale</option>
-                                                    <option value="grassa">Grassa</option>
-                                                    <option value="abbondante">Abbondante</option>
-                                                    <option value="leggera">Leggera</option>
-                                                </select>
-                                                </div>
-
-                                                <div class="meal-row">
-                                                <label for="pranzo">Pranzo</label>
-                                                <select id="pranzo" name="pranzo">
-                                                    <option value="">Seleziona...</option>
-                                                    <option value="proteico">Proteico</option>
-                                                    <option value="light">Light</option>
-                                                    <option value="normale">Normale</option>
-                                                    <option value="grassa">Grassa</option>
-                                                    <option value="abbondante">Abbondante</option>
-                                                    <option value="leggera">Leggera</option>
-                                                </select>
-                                                </div>
-
-                                                <div class="meal-row">
-                                                <label for="cena">Cena</label>
-                                                <select id="cena" name="cena">
-                                                    <option value="">Seleziona...</option>
-                                                    <option value="proteica">Proteica</option>
-                                                    <option value="light">Light</option>
-                                                    <option value="normale">Normale</option>
-                                                    <option value="grassa">Grassa</option>
-                                                    <option value="abbondante">Abbondante</option>
-                                                    <option value="leggera">Leggera</option>
-                                                </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="card-footer">
-                                                <button class="save-btn">Salva</button>
-                                            </div>
-                                            </article>
-                                    </div>
-                                </section>
-
-                            </div>
-
-
-                        </div>
+                        <div id="chartContainer" style="height: 300px; width: 100%;">
+	</div>
                         
+                        <div style="margin-top: 10px">
+                            <a href="https://github.com/azouaoui-med/pro-sidebar-template" target="_blank">
+                                <img alt="GitHub stars" src="https://img.shields.io/github/stars/azouaoui-med/pro-sidebar-template?style=social" />
+                            </a>
+                            <a href="https://github.com/azouaoui-med/pro-sidebar-template" target="_blank">
+                                <img alt="GitHub forks" src="https://img.shields.io/github/forks/azouaoui-med/pro-sidebar-template?style=social" />
+                            </a>
+                        </div>
+                        <div>
+                            <h2>Features</h2>
+                            <ul>
+                                <li>Fully responsive</li>
+                                <li>Collapsable sidebar</li>
+                                <li>Multi level menu</li>
+                                <li>RTL support</li>
+                                <li>Customizable</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h2>Resources</h2>
+                            <ul>
+                                <li>
+                                    <a target="_blank" href="https://github.com/azouaoui-med/css-pro-layout">
+                  Css Pro Layout</a
+                >
+              </li>
+              <li>
+                <a target="_blank" href="https://github.com/popperjs/popper-core"> Popper Core</a>
+                                </li>
+                                <li>
+                                    <a target="_blank" href="https://remixicon.com/"> Remix Icons</a>
+                                </li>
+                            </ul>
+                        </div>
                         <footer class="footer">
                             <small style="margin-bottom: 20px; display: inline-block">
-                                © 2025 made with
-                                <span style="color: red; font-size: 18px">&#10084;</span> by -
-                                    <a target="_blank" href="https://azouaoui.netlify.app"> Mohamed Azouaoui </a>
-                            </small>
+              © 2025 made with
+              <span style="color: red; font-size: 18px">&#10084;</span> by -
+              <a target="_blank" href="https://azouaoui.netlify.app"> Mohamed Azouaoui </a>
+            </small>
                             <br />
                             <div class="social-links">
                                 <a href="https://github.com/azouaoui-med" target="_blank">
@@ -513,7 +355,6 @@
                     <script src="https://unpkg.com/@popperjs/core@2"></script>
                     <script src="javascript/APnavbarjs.js"></script>
                     <script src="javascript/APcounter.js"></script>
-                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                    <script src="{{ asset('javascript/donutgraph.js') }}"></script>
-
+                    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+                    <script src="{{ asset('javascript/splinechart.js') }}"></script>
                     {% endblock %}

@@ -81,4 +81,12 @@ final class PrivateareaController extends AbstractController
         ]);
     }
 
+    #[Route('/linegraphicsarea', name: 'line_graphics_page')] //directory,nome
+    public function lineGraphicsArea(): Response
+    {
+        return $this->render('privatearea/linegraphics.html.twig', [
+            'controller_name' => 'PrivateareaController',
+        ]);
+    }
+
 }

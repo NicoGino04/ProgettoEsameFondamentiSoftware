@@ -13,8 +13,8 @@
 
 /* HEADER */
 .meal-selector-header {
-    padding: 0.9rem 1.25rem;
-    border-bottom: 1px solid #eff1f6;
+    padding: 0.7rem 1.25rem;
+    
 }
 
 .meal-selector-header h3 {
@@ -24,7 +24,7 @@
 
 /* BODY */
 .meal-selector-body {
-    padding: 1.25rem 1.5rem;
+    padding: 0.9rem 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;

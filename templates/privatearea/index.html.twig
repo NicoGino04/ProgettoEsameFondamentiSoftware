@@ -410,11 +410,11 @@
                                             </div>
                                         </article>
                                         <article class="card meal-selector-card">
-                                        
+
                                             <div class="meal-selector-header">
-                                            
+
                                                 <h3>Selezione pasti</h3>
-                                                
+
                                             </div>
 
                                             <div class="meal-selector-body">
@@ -539,5 +539,30 @@
                     <script src="https://unpkg.com/@popperjs/core@2"></script>
                     <script src="javascript/APnavbarjs.js"></script>
                     <script src="javascript/APcounter.js"></script>
+    <script>
+        document.querySelectorAll('select').forEach(select => {
+            select.addEventListener('change', function () {
 
-                    {% endblock %}
+                if (!this.value) return;
+
+                fetch('/pasto/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify({
+                        pasto: this.id,        // colazione | pranzo | cena
+                        tipo: this.value      // normale | grassa | ecc
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Salvato:', data);
+                    });
+            });
+        });
+    </script>
+
+
+{% endblock %}

@@ -20,18 +20,6 @@ class Pasto
     #[ORM\Column(length: 255)]
     private ?string $tipo = null;
 
-    #[ORM\Column]
-    private ?int $carboidrati = null;
-
-    #[ORM\Column]
-    private ?int $grassi = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $proteine = null;
-
-    #[ORM\Column]
-    private ?int $calorie = null;
-
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTime $giorno = null;
 
@@ -64,54 +52,6 @@ class Pasto
     public function setTipo(string $tipo): static
     {
         $this->tipo = $tipo;
-
-        return $this;
-    }
-
-    public function getCarboidrati(): ?int
-    {
-        return $this->carboidrati;
-    }
-
-    public function setCarboidrati(int $carboidrati): static
-    {
-        $this->carboidrati = $carboidrati;
-
-        return $this;
-    }
-
-    public function getGrassi(): ?int
-    {
-        return $this->grassi;
-    }
-
-    public function setGrassi(int $grassi): static
-    {
-        $this->grassi = $grassi;
-
-        return $this;
-    }
-
-    public function getProteine(): ?string
-    {
-        return $this->proteine;
-    }
-
-    public function setProteine(string $proteine): static
-    {
-        $this->proteine = $proteine;
-
-        return $this;
-    }
-
-    public function getCalorie(): ?int
-    {
-        return $this->calorie;
-    }
-
-    public function setCalorie(int $calorie): static
-    {
-        $this->calorie = $calorie;
 
         return $this;
     }

@@ -419,36 +419,20 @@
 
                                             <div class="meal-selector-body">
                                                 <div class="meal-row">
-                                                <label for="colazione">Colazione</label>
-                                                <select id="colazione" name="colazione">
+                                                <label for="pasto">Pasto</label>
+                                                <select id="pasto" name="pasto">
                                                     <option value="">Seleziona...</option>
-                                                    <option value="proteica">Proteica</option>
-                                                    <option value="light">Light</option>
-                                                    <option value="normale">Normale</option>
-                                                    <option value="grassa">Grassa</option>
-                                                    <option value="abbondante">Abbondante</option>
-                                                    <option value="leggera">Leggera</option>
+                                                    <option value="colazione">Colazione</option>
+                                                    <option value="pranzo">Pranzo</option>
+                                                    <option value="cena">Cena</option>
                                                 </select>
                                                 </div>
 
                                                 <div class="meal-row">
-                                                <label for="pranzo">Pranzo</label>
-                                                <select id="pranzo" name="pranzo">
+                                                <label for="tipo">Tipo</label>
+                                                <select id="tipo" name="tipo">
                                                     <option value="">Seleziona...</option>
                                                     <option value="proteico">Proteico</option>
-                                                    <option value="light">Light</option>
-                                                    <option value="normale">Normale</option>
-                                                    <option value="grassa">Grassa</option>
-                                                    <option value="abbondante">Abbondante</option>
-                                                    <option value="leggera">Leggera</option>
-                                                </select>
-                                                </div>
-
-                                                <div class="meal-row">
-                                                <label for="cena">Cena</label>
-                                                <select id="cena" name="cena">
-                                                    <option value="">Seleziona...</option>
-                                                    <option value="proteica">Proteica</option>
                                                     <option value="light">Light</option>
                                                     <option value="normale">Normale</option>
                                                     <option value="grassa">Grassa</option>
@@ -459,7 +443,7 @@
                                             </div>
 
                                             <div class="card-footer">
-                                                <button class="save-btn">Salva</button>
+                                                <button id="save_button" class="save-btn">Salva</button>
                                             </div>
                                             </article>
                                     </div>
@@ -540,11 +524,13 @@
                     <script src="javascript/APnavbarjs.js"></script>
                     <script src="javascript/APcounter.js"></script>
     <script>
-        document.querySelectorAll('select').forEach(select => {
-            select.addEventListener('change', function () {
+        document.getElementById('save_button').addEventListener('click',function(){
+            const pasto = document.getElementById('pasto');
+            const tipo = document.getElementById('tipo');
 
-                if (!this.value) return;
+            console.log(pasto.value, tipo.value);
 
+            if (pasto.value && tipo.value){
                 fetch('/pasto/create', {
                     method: 'POST',
                     headers: {
@@ -552,16 +538,17 @@
                         'X-Requested-With': 'XMLHttpRequest'
                     },
                     body: JSON.stringify({
-                        pasto: this.id,        // colazione | pranzo | cena
-                        tipo: this.value      // normale | grassa | ecc
+                        pasto: pasto.value,        // colazione | pranzo | cena
+                        tipo: tipo.value      // normale | grassa | ecc
                     })
                 })
                     .then(response => response.json())
                     .then(data => {
                         console.log('Salvato:', data);
                     });
-            });
-        });
+            }
+
+        })
     </script>
 
 

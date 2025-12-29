@@ -97,9 +97,6 @@ final class PrivateareaController extends AbstractController
         $pasto->setGiorno();        // data automatica
         $pasto->setUser($this->getUser());
 
-        // opzionale: utente loggato
-        // $pasto->setUser($this->getUser());
-
         $em->persist($pasto);
         $em->flush();
 

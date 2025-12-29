@@ -4,7 +4,9 @@
 <link rel="stylesheet" href="css/APmealcard.css">
 <link rel="stylesheet" href="css/APcard.css">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="css/APprogbar.css"> {% endblock %} {% block body %}
+
 
 <div class="layout has-sidebar fixed-sidebar fixed-header">
     <aside id="sidebar" class="sidebar break-point-sm has-bg-image">
@@ -528,9 +530,12 @@
             const pasto = document.getElementById('pasto');
             const tipo = document.getElementById('tipo');
 
+
+
             console.log(pasto.value, tipo.value);
 
             if (pasto.value && tipo.value){
+                this.disabled=true;
                 fetch('/pasto/create', {
                     method: 'POST',
                     headers: {
@@ -542,10 +547,27 @@
                         tipo: tipo.value      // normale | grassa | ecc
                     })
                 })
-                    .then(response => response.json())
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Errore durante il salvataggio');
+                        }
+                        return response.json();
+                    })
                     .then(data => {
                         console.log('Salvato:', data);
-                    });
+
+                    })
+                    .catch(error => {
+                        console.error('Errore:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: error,
+                            confirmButtonColor: '#d33'
+                        });
+                    })
+                    .finally(() => {
+                        this.disabled = false;
+                    })
             }
 
         })

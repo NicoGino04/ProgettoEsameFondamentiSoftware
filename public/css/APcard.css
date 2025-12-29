@@ -205,6 +205,12 @@ body {
 .card-footer .save-btn:hover {
     background-color: #395983;
 }
+.card-footer .save-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background-color: #ccc;
+    color: #666;
+}
 .meal-selector-card {
     grid-column: span 3; /* occupa 2 colonne su desktop */
 }

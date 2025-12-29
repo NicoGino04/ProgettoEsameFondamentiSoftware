@@ -62,9 +62,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $misuraAltezza = null;
 
+    /**
+     * @var Collection<int, Pasto>
+     */
+    #[ORM\OneToMany(targetEntity: Pasto::class, mappedBy: 'user')]
+    private Collection $pasto;
+
     public function __construct()
     {
         $this->goals = new ArrayCollection();
+        $this->pasto = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -259,6 +266,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setMisuraAltezza(?string $misuraAltezza): static
     {
         $this->misuraAltezza = $misuraAltezza;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Pasto>
+     */
+    public function getPasto(): Collection
+    {
+        return $this->pasto;
+    }
+
+    public function addPasto(Pasto $pasto): static
+    {
+        if (!$this->pasto->contains($pasto)) {
+            $this->pasto->add($pasto);
+            $pasto->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePasto(Pasto $pasto): static
+    {
+        if ($this->pasto->removeElement($pasto)) {
+            // set the owning side to null (unless already changed)
+            if ($pasto->getUser() === $this) {
+                $pasto->setUser(null);
+            }
+        }
 
         return $this;
     }

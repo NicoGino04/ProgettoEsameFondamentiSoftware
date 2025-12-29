@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %} {% block title %}AreaPrivata!{% endblock %} {% block stylesheets %}
 
 <link rel="stylesheet" href="css/APnavbar.css">
+<link rel="stylesheet" href="css/APmealcard.css">
 <link rel="stylesheet" href="css/APcard.css">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="css/APprogbar.css"> {% endblock %} {% block body %}
@@ -408,6 +409,59 @@
                                                 <button class="save-btn">Salva</button>
                                             </div>
                                         </article>
+                                        <article class="card meal-selector-card">
+                                        
+                                            <div class="meal-selector-header">
+                                            
+                                                <h3>Selezione pasti</h3>
+                                                
+                                            </div>
+
+                                            <div class="meal-selector-body">
+                                                <div class="meal-row">
+                                                <label for="colazione">Colazione</label>
+                                                <select id="colazione" name="colazione">
+                                                    <option value="">Seleziona...</option>
+                                                    <option value="proteica">Proteica</option>
+                                                    <option value="light">Light</option>
+                                                    <option value="normale">Normale</option>
+                                                    <option value="grassa">Grassa</option>
+                                                    <option value="abbondante">Abbondante</option>
+                                                    <option value="leggera">Leggera</option>
+                                                </select>
+                                                </div>
+
+                                                <div class="meal-row">
+                                                <label for="pranzo">Pranzo</label>
+                                                <select id="pranzo" name="pranzo">
+                                                    <option value="">Seleziona...</option>
+                                                    <option value="proteico">Proteico</option>
+                                                    <option value="light">Light</option>
+                                                    <option value="normale">Normale</option>
+                                                    <option value="grassa">Grassa</option>
+                                                    <option value="abbondante">Abbondante</option>
+                                                    <option value="leggera">Leggera</option>
+                                                </select>
+                                                </div>
+
+                                                <div class="meal-row">
+                                                <label for="cena">Cena</label>
+                                                <select id="cena" name="cena">
+                                                    <option value="">Seleziona...</option>
+                                                    <option value="proteica">Proteica</option>
+                                                    <option value="light">Light</option>
+                                                    <option value="normale">Normale</option>
+                                                    <option value="grassa">Grassa</option>
+                                                    <option value="abbondante">Abbondante</option>
+                                                    <option value="leggera">Leggera</option>
+                                                </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="card-footer">
+                                                <button class="save-btn">Salva</button>
+                                            </div>
+                                            </article>
                                     </div>
                                 </section>
 

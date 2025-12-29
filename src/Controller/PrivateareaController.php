@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 final class PrivateareaController extends AbstractController
 {
@@ -88,6 +89,13 @@ final class PrivateareaController extends AbstractController
         Request $request,
         EntityManagerInterface $em
     ): JsonResponse {
+
+        if (!$this->getUser()){
+            return new JsonResponse([
+                'status' => 'error',
+                'error' => 'Utente non loggato'
+            ], Response::HTTP_UNAUTHORIZED);
+        }
 
         $data = json_decode($request->getContent(), true);
 

@@ -2,7 +2,7 @@
     --slide-gap: 0;
     --transition-duration: 0.4s;
     
-    position: relative;
+    position: absolute;
     top: 4em;
     left: 47vw;
     width: 700px;
@@ -12,6 +12,7 @@
     box-shadow: 0 8px 48px 2px hsla(10 6% 15% / 0.4);
     overflow: hidden;
     user-select: none;
+    top: 175px;
 }
 
 .slider__track {
@@ -153,7 +154,7 @@
 
 @media (max-width: 1500px) {
     .slider {
-        top: 250px;
+        top: 375px;
         width: 95vw;
         height: 400px;
         left: 2.5vw;

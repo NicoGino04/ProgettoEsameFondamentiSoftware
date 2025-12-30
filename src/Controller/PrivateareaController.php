@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Pasto;
 use App\Entity\User;
 use App\Entity\Goal;
+use App\Repository\PastoRepository;
 use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,6 +19,10 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 final class PrivateareaController extends AbstractController
 {
+    public function __construct(private readonly PastoRepository $pastoRepository)
+    {
+    }
+
     #[Route('/privatearea', name: 'app_privatearea')]
     public function index(): Response
     {
@@ -116,9 +121,80 @@ final class PrivateareaController extends AbstractController
         $em->persist($pasto);
         $em->flush();
 
+        $calorie = $this->getCalorie();
+
         return new JsonResponse([
             'status' => 'ok',
-            'id' => $pasto->getId()
+            'id' => $pasto->getId(),
+            'carboidrati' => $calorie['carboidrati'],
+            'grassi' => $calorie['grassi'],
+            'proteine' => $calorie['proteine'],
+        ]);
+    }
+
+    private function getCalorie(): array{
+
+        $user = $this->getUser();
+        $valoreGiornaliero = $user->getBasale();
+        $pastiGiornalieri = $this->pastoRepository->findByDateField($user);
+
+        $kcal_carbo = 0;
+        $kcal_grassi = 0;
+        $kcal_proteine = 0;
+
+        foreach ($pastiGiornalieri as $pasto){
+
+            switch ($pasto->getPasto()){
+                case 'colazione' : $percPasto = 25; break;
+                case 'pranzo' : $percPasto = 40; break;
+                case 'cena' : $percPasto = 35; break;
+                default : $percPasto = 0;
+            }
+
+            switch ($pasto->getTipo()){
+                case 'normale' :
+                case 'leggera' :
+                case 'abbondante' : $percCarbo = 58; $percGrassi = 26; $percProteine = 16; break;
+                case 'proteico' : $percCarbo = 25; $percGrassi = 30; $percProteine = 45; break;
+                case 'grassa' : $percCarbo = 20; $percGrassi = 55; $percProteine = 25; break;
+                case 'light' : $percCarbo = 40; $percGrassi = 35; $percProteine = 25; break;
+                default : $percCarbo = 0; $percGrassi = 0; $percProteine = 0; break;
+            }
+
+            $kcal = ($valoreGiornaliero * $percPasto) / 100;
+            $kcal_carbo = $kcal_carbo + ($kcal * $percCarbo) / 100;
+            // $grammi_carbo = $kcal_carbo_colazione/4;
+            $kcal_grassi = $kcal_grassi + ($kcal * $percGrassi) / 100;
+            $kcal_proteine = $kcal_proteine + ($kcal * $percProteine) / 100;
+
+        }
+        return [
+            'carboidrati' => $kcal_carbo,
+            'grassi' => $kcal_grassi,
+            'proteine' => $kcal_proteine
+        ];
+    }
+
+    #[Route('/macronutrienti', name: 'macronutrienti', methods: ['GET'])]
+    public function macronutrienti(
+        Request $request,
+        EntityManagerInterface $em
+    ): JsonResponse {
+
+        if (!$this->getUser()){
+            return new JsonResponse([
+                'status' => 'error',
+                'error' => 'Utente non loggato'
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        $calorie = $this->getCalorie();
+
+        return new JsonResponse([
+            'status' => 'ok',
+            'carboidrati' => $calorie['carboidrati'],
+            'grassi' => $calorie['grassi'],
+            'proteine' => $calorie['proteine'],
         ]);
     }
 

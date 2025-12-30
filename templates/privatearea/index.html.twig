@@ -332,10 +332,14 @@
 
                                             {% for goal in topGoals %}
                                                 {% set percentage = goal.getPercentage() %}
+                                                {% if percentage > 100 %}
+                                                    {% set percentage = 100 %}
+                                                {% endif %}
                                                 <div class="pb-item">
                                                     <label>{{ goal.name }} ({{ goal.goalQuantity }})</label>
                                                     <progress value="{{ percentage }}" max="100" style="--value: {{ percentage }}; --max: 100;"></progress>
                                                 </div>
+
                                             {% endfor %}
                                         </div>
                                     </div>
@@ -376,12 +380,12 @@
                                                 <p>Quanti bicchieri d'acqua hai bevuto oggi?</p>
                                                 <div class="counter">
                                                     <button class="decrease">-</button>
-                                                    <span class="count">0</span>
+                                                    <span id="waterCount" class="count">0</span>
                                                     <button class="increase">+</button>
                                                 </div>
                                             </div>
                                             <div class="card-footer">
-                                                <button class="save-btn">Salva</button>
+                                                <button data-type="waterButton" class="save-btn">Salva</button>
                                             </div>
                                         </article>
 
@@ -398,12 +402,12 @@
                                                 <p>Quante ore di sonno hai fatto?</p>
                                                 <div class="counter">
                                                     <button class="decrease">-</button>
-                                                    <span class="count">0</span>
+                                                    <span id="sleepCount" class="count">0</span>
                                                     <button class="increase">+</button>
                                                 </div>
                                             </div>
                                             <div class="card-footer">
-                                                <button class="save-btn">Salva</button>
+                                                <button data-type="sleepButton" class="save-btn">Salva</button>
                                             </div>
                                         </article>
 
@@ -419,12 +423,12 @@
                                                 <p>Quante ore di sole hai fatto?</p>
                                                 <div class="counter">
                                                     <button class="decrease">-</button>
-                                                    <span class="count">0</span>
+                                                    <span id="sunCount" class="count">0</span>
                                                     <button class="increase">+</button>
                                                 </div>
                                             </div>
                                             <div class="card-footer">
-                                                <button class="save-btn">Salva</button>
+                                                <button data-type="sunButton" class="save-btn">Salva</button>
                                             </div>
                                         </article>
                                         <article class="card meal-selector-card">

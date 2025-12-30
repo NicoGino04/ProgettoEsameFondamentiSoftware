@@ -122,4 +122,63 @@ final class PrivateareaController extends AbstractController
         ]);
     }
 
+    #[Route('/increment', name: 'goal_increment', methods: ['POST'])]
+    public function increment(
+        Request $request,
+        EntityManagerInterface $em
+    ): JsonResponse {
+
+        if (!$this->getUser()){
+            return new JsonResponse([
+                'status' => 'error',
+                'error' => 'Utente non loggato'
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        $data = json_decode($request->getContent(), true);
+
+        $user = $this->getUser();
+        $goals = $user->getGoals();
+        $saved = null;
+
+        for ($i = 0; $i < count($goals); $i++) {
+            if ($goals[$i]->getName() == "acqua" && $data['buttonType'] == "waterButton") {
+                $goals[$i]->setQuantity($goals[$i]->getQuantity() + $data['trueCount']);
+                $em->persist($goals[$i]);
+                $saved = $i;
+            }
+            else if ($goals[$i]->getName() == "sonno" && $data['buttonType'] == "sleepButton") {
+                $goals[$i]->setQuantity($goals[$i]->getQuantity() + $data['trueCount']);
+                $em->persist($goals[$i]);
+                $saved = $i;
+            }
+            else if ($goals[$i]->getName() == "sole" && $data['buttonType'] == "sunButton") {
+                $goals[$i]->setQuantity($goals[$i]->getQuantity() + $data['trueCount']);
+                $em->persist($goals[$i]);
+                $saved = $i;
+            }
+        }
+
+        $em->flush();
+
+        if (is_null($saved)) {
+            return new JsonResponse([
+                'status' => 'error',
+                'error' => 'Obiettivo non corretto'
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        $completed = false;
+
+        if ($goals[$saved]->getQuantity() >= $goals[$saved]->getGoalQuantity()) {
+            $completed = true;
+        }
+
+        return new JsonResponse([
+            'status' => 'ok',
+            'id' => $goals[$saved]->getId(),
+            'completed' => $completed
+        ]);
+    }
+
 }

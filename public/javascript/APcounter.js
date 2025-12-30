@@ -21,10 +21,59 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (btnSave) {
             btnSave.addEventListener('click', () => {
-                const parametro = card.querySelector('h3').textContent;
-                const payload = { parametro, valore: count };
-                console.log("Simulazione invio al DB:", payload);
-                alert(`Salvato: ${parametro} = ${count}`);
+                const buttonType = btnSave.dataset.type;
+                const trueCount = countEl.textContent;
+                const payload = { buttonType : buttonType, trueCount : trueCount };
+
+                fetch('/increment', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify(payload)
+                })
+                    .then(response => {
+                        return response.json().then(data => {
+                            if (!response.ok) {
+                                throw new Error(data.error || 'Errore di salvataggio');
+                            }
+                            return data;
+                        });
+                    })
+                    .then(data => {
+                        console.log('Salvato:', data);
+                        if (data.completed){
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Complimenti, hai superato con successo il tuo obiettivo!',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true
+                            });
+                        }
+                        else{
+                            Swal.fire({
+                                toast: true,
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Counter incrementato con successo',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true
+                            });
+                        }
+
+                    })
+                    .catch(error => {
+                        console.error('Errore:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: error.message,
+                            confirmButtonColor: '#d33'
+                        });
+                    })
+
             });
         }
     });

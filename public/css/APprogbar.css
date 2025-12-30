@@ -111,7 +111,7 @@ progress[value] {
 progress[value] {
     --progress-value-percent: calc(var(--progress-value-decimal) * 100%);
     --progress-value-color: hsl( calc((var(--progress-empty-color-h) + (var(--progress-filled-color-h) - var(--progress-empty-color-h)) * var(--progress-value-decimal)) * 1deg) calc((var(--progress-empty-color-s) + (var(--progress-filled-color-s) - var(--progress-empty-color-s)) * var(--progress-value-decimal)) * 1%) calc((var(--progress-empty-color-l) + (var(--progress-filled-color-l) - var(--progress-empty-color-l)) * var(--progress-value-decimal)) * 1%));
-    animation: calc(3s * var(--progress-max-decimal)) linear 0.5s 1 normal both progress;
+    animation: calc(1.2s * var(--progress-max-decimal)) linear 0s 1 normal both progress;
 }
 
 progress[value]::-webkit-progress-bar {

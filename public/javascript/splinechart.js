@@ -15,6 +15,10 @@ window.onload = function () {
         gridThickness: 0,         // elimina griglia verticale
         title: "Tempo",
       },
+	  backgroundColor: "transparent",
+	  plotArea: {
+	  	backgroundColor: "transparent" //rende lo sfondo del grafico trasparente
+	  },
 			data: [
 			{        
 				toolTipContent: "{y} units",

@@ -332,10 +332,14 @@
 
                                             {% for goal in topGoals %}
                                                 {% set percentage = goal.getPercentage() %}
-                                                <div class="pb-item">
+                                                {% if percentage > 100 %}
+                                                    {% set percentage = 100 %}
+                                                {% endif %}
+                                                <div class="pb-item" data-goal-id="{{ goal.id }}">
                                                     <label>{{ goal.name }} ({{ goal.goalQuantity }})</label>
                                                     <progress value="{{ percentage }}" max="100" style="--value: {{ percentage }}; --max: 100;"></progress>
                                                 </div>
+
                                             {% endfor %}
                                         </div>
                                     </div>
@@ -376,12 +380,12 @@
                                                 <p>Quanti bicchieri d'acqua hai bevuto oggi?</p>
                                                 <div class="counter">
                                                     <button class="decrease">-</button>
-                                                    <span class="count">0</span>
+                                                    <span id="waterCount" class="count">0</span>
                                                     <button class="increase">+</button>
                                                 </div>
                                             </div>
                                             <div class="card-footer">
-                                                <button class="save-btn">Salva</button>
+                                                <button data-type="waterButton" class="save-btn">Salva</button>
                                             </div>
                                         </article>
 
@@ -398,12 +402,12 @@
                                                 <p>Quante ore di sonno hai fatto?</p>
                                                 <div class="counter">
                                                     <button class="decrease">-</button>
-                                                    <span class="count">0</span>
+                                                    <span id="sleepCount" class="count">0</span>
                                                     <button class="increase">+</button>
                                                 </div>
                                             </div>
                                             <div class="card-footer">
-                                                <button class="save-btn">Salva</button>
+                                                <button data-type="sleepButton" class="save-btn">Salva</button>
                                             </div>
                                         </article>
 
@@ -419,12 +423,12 @@
                                                 <p>Quante ore di sole hai fatto?</p>
                                                 <div class="counter">
                                                     <button class="decrease">-</button>
-                                                    <span class="count">0</span>
+                                                    <span id="sunCount" class="count">0</span>
                                                     <button class="increase">+</button>
                                                 </div>
                                             </div>
                                             <div class="card-footer">
-                                                <button class="save-btn">Salva</button>
+                                                <button data-type="sunButton" class="save-btn">Salva</button>
                                             </div>
                                         </article>
                                         <article class="card meal-selector-card">
@@ -438,7 +442,7 @@
                                             <div class="meal-selector-body">
                                                 <div class="meal-row">
                                                 <label for="pasto">Pasto</label>
-                                                <select id="pasto" name="pasto">
+                                                <select data-type="selectPasto" id="pasto" name="pasto">
                                                     <option value="">Seleziona...</option>
                                                     <option value="colazione">Colazione</option>
                                                     <option value="pranzo">Pranzo</option>
@@ -448,7 +452,7 @@
 
                                                 <div class="meal-row">
                                                 <label for="tipo">Tipo</label>
-                                                <select id="tipo" name="tipo">
+                                                <select data-type="selectPasto" id="tipo" name="tipo">
                                                     <option value="">Seleziona...</option>
                                                     <option value="proteico">Proteico</option>
                                                     <option value="light">Light</option>
@@ -461,7 +465,7 @@
                                             </div>
 
                                             <div class="card-footer">
-                                                <button id="save_button" class="save-btn">Salva</button>
+                                                <button disabled id="save_button" class="save-btn">Salva</button>
                                             </div>
                                             </article>
                                     </div>
@@ -500,6 +504,25 @@
                     <script src="javascript/APnavbarjs.js"></script>
                     <script src="javascript/APcounter.js"></script>
     <script>
+
+        document.querySelectorAll('[data-type="selectPasto"]')
+            .forEach(el => {
+                el.addEventListener('change', function () {
+
+                    let disable = false;
+                    const button = document.getElementById("save_button");
+
+                    document.querySelectorAll('[data-type="selectPasto"]')
+                        .forEach(el => {
+                            if (!el.value){
+                                disable = true;
+                            }
+                        })
+                    button.disabled = disable;
+                });
+            });
+
+
         document.getElementById('save_button').addEventListener('click',function(){
             const pasto = document.getElementById('pasto');
             const tipo = document.getElementById('tipo');

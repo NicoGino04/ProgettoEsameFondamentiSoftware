@@ -307,7 +307,7 @@
                                 <article class="card donut-card">
                                     <div class="donut-card-header">
                                         <div>
-                                            <h3>Micronutrienti</h3>
+                                            <h3>Macronutrienti</h3>
                                         </div>
                                     </div>
                                     <div class="donut-card-body">
@@ -527,8 +527,6 @@
             const pasto = document.getElementById('pasto');
             const tipo = document.getElementById('tipo');
 
-
-
             console.log(pasto.value, tipo.value);
 
             if (pasto.value && tipo.value){
@@ -554,6 +552,15 @@
                     })
                     .then(data => {
                         console.log('Salvato:', data);
+
+                        chart.data.datasets[0].data = [
+                            data.carboidrati,
+                            data.grassi,
+                            data.proteine
+                        ]
+
+                        chart.update();
+
                         Swal.fire({
                             toast: true,
                             position: 'top-end',

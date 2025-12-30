@@ -438,7 +438,7 @@
                                             <div class="meal-selector-body">
                                                 <div class="meal-row">
                                                 <label for="pasto">Pasto</label>
-                                                <select id="pasto" name="pasto">
+                                                <select data-type="selectPasto" id="pasto" name="pasto">
                                                     <option value="">Seleziona...</option>
                                                     <option value="colazione">Colazione</option>
                                                     <option value="pranzo">Pranzo</option>
@@ -448,7 +448,7 @@
 
                                                 <div class="meal-row">
                                                 <label for="tipo">Tipo</label>
-                                                <select id="tipo" name="tipo">
+                                                <select data-type="selectPasto" id="tipo" name="tipo">
                                                     <option value="">Seleziona...</option>
                                                     <option value="proteico">Proteico</option>
                                                     <option value="light">Light</option>
@@ -461,7 +461,7 @@
                                             </div>
 
                                             <div class="card-footer">
-                                                <button id="save_button" class="save-btn">Salva</button>
+                                                <button disabled id="save_button" class="save-btn">Salva</button>
                                             </div>
                                             </article>
                                     </div>
@@ -500,6 +500,25 @@
                     <script src="javascript/APnavbarjs.js"></script>
                     <script src="javascript/APcounter.js"></script>
     <script>
+
+        document.querySelectorAll('[data-type="selectPasto"]')
+            .forEach(el => {
+                el.addEventListener('change', function () {
+
+                    let disable = false;
+                    const button = document.getElementById("save_button");
+
+                    document.querySelectorAll('[data-type="selectPasto"]')
+                        .forEach(el => {
+                            if (!el.value){
+                                disable = true;
+                            }
+                        })
+                    button.disabled = disable;
+                });
+            });
+
+
         document.getElementById('save_button').addEventListener('click',function(){
             const pasto = document.getElementById('pasto');
             const tipo = document.getElementById('tipo');

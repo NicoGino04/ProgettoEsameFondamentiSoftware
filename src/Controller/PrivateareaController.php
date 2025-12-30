@@ -177,7 +177,8 @@ final class PrivateareaController extends AbstractController
         return new JsonResponse([
             'status' => 'ok',
             'id' => $goals[$saved]->getId(),
-            'completed' => $completed
+            'completed' => $completed,
+            'percentage' => $goals[$saved]->getPercentage()
         ]);
     }
 

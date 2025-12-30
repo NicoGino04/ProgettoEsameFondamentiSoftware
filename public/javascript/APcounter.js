@@ -64,6 +64,13 @@ document.addEventListener('DOMContentLoaded', () => {
                             });
                         }
 
+                        const el = document.querySelector(`.pb-item[data-goal-id="${data.id}"]`);
+                        console.log(el)
+                        if (el){
+                            const value = data.percentage > 100 ? 100 : data.percentage;
+                            el.querySelector('progress').style.setProperty('--value',value);
+                        }
+
                     })
                     .catch(error => {
                         console.error('Errore:', error);

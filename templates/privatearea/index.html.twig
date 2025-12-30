@@ -335,7 +335,7 @@
                                                 {% if percentage > 100 %}
                                                     {% set percentage = 100 %}
                                                 {% endif %}
-                                                <div class="pb-item">
+                                                <div class="pb-item" data-goal-id="{{ goal.id }}">
                                                     <label>{{ goal.name }} ({{ goal.goalQuantity }})</label>
                                                     <progress value="{{ percentage }}" max="100" style="--value: {{ percentage }}; --max: 100;"></progress>
                                                 </div>

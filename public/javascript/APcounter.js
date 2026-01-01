@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.card').forEach(card => {
+    document.querySelectorAll('.card[data-counter="true"]').forEach(card => {
         const countEl = card.querySelector('.count');
         const btnInc = card.querySelector('.increase');
         const btnDec = card.querySelector('.decrease');
-        const btnSave = card.querySelector('.save-btn');
 
         if (!countEl || !btnInc || !btnDec) return;
 
@@ -18,6 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (count > 0) count--;
             countEl.textContent = count;
         });
+
+    });
+
+    document.querySelectorAll('.card[data-type="goals-card"]').forEach(card => {
+        const btnSave = card.querySelector('.save-btn');
+        const countEl = card.querySelector('.count');
 
         if (btnSave) {
             btnSave.addEventListener('click', () => {
@@ -84,4 +89,5 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+
 });

@@ -256,7 +256,7 @@
 -->
                                 <section class="dashboard-right">
                                     <div class="card-grid">
-                                        <article class="card">
+                                        <article class="card" data-type="goals-card" data-counter="true">
                                             <div class="card-header">
                                                 <div>
                                                     <span><img src="{{ asset('images/icons/iconB3.png') }}" /></span>
@@ -278,7 +278,7 @@
 
 
 
-                                        <article class="card">
+                                        <article class="card" data-type="goals-card" data-counter="true">
                                             <div class="card-header">
                                                 <div>
                                                     <span><img src="{{ asset('images/icons/iconM3.png') }}" /></span>
@@ -299,7 +299,7 @@
                                         </article>
 
 
-                                        <article class="card">
+                                        <article class="card" data-type="goals-card" data-counter="true">
                                             <div class="card-header">
                                                 <div>
                                                     <span><img src="{{ asset('images/icons/iconS2.png') }}" /></span>
@@ -355,7 +355,7 @@
                                                 <button disabled id="save_button" class="save-btn">Salva</button>
                                             </div>
                                         </article>
-                                         <article class="card meal-selector-card">
+                                         <article class="card meal-selector-card" data-type="activity-card" data-counter="true">
 
                                             <div class="meal-selector-header">
                                                 <span><img src="{{ asset('images/icons/iconAF4.png') }}" /></span>
@@ -365,32 +365,32 @@
 
                                             <div class="meal-selector-body">
                                                 <div class="meal-row">
-                                                <label for="pasto">Tipo</label>
-                                                <select id="pasto" name="pasto">
+                                                <label for="attivita">Tipo</label>
+                                                <select id="attivita" name="attivita" data-type="selectAttivita">
                                                     <option value="">Seleziona...</option>
-                                                    <option value="colazione">Nuoto</option>
-                                                    <option value="pranzo">Corsa</option>
-                                                    <option value="cena">Camminata</option>
-                                                    <option value="cena">Basket</option>
-                                                    <option value="colazione">Pallavolo</option>
-                                                    <option value="pranzo">Calcio</option>
-                                                    <option value="cena">Tennis</option>
-                                                    <option value="colazione">Padel</option>
-                                                    <option value="pranzo">Pallamano</option>
+                                                    <option value="nuoto">Nuoto</option>
+                                                    <option value="corsa">Corsa</option>
+                                                    <option value="camminata">Camminata</option>
+                                                    <option value="basket">Basket</option>
+                                                    <option value="pallavolo">Pallavolo</option>
+                                                    <option value="calcio">Calcio</option>
+                                                    <option value="tennis">Tennis</option>
+                                                    <option value="padel">Padel</option>
+                                                    <option value="pallamano">Pallamano</option>
                                                 </select>
-                                                </div>
-                                                <div class="counter">
-                                                    <button class="decrease">-</button>
-                                                    <span class="count">0</span>
-                                                    <button class="increase">+</button>
                                                 </div>
                                             </div>
 
+                                             <div class="counter">
+                                                 <button class="decrease">-</button>
+                                                 <span id="activityCount" class="count">0</span>
+                                                 <button class="increase">+</button>
+                                             </div>
                                                 
                                             
 
                                             <div class="card-footer">
-                                                <button id="save_button" class="save-btn">Salva</button>
+                                                <button disabled id="save_activity" class="save-btn">Salva</button>
                                             </div>
                                         </article>
                                     </div>
@@ -446,6 +446,87 @@
                 });
             });
 
+        document.querySelectorAll('[data-type="selectAttivita"]')
+            .forEach(el => {
+                el.addEventListener('change', function () {
+
+                    let disable = false;
+                    const button = document.getElementById("save_activity");
+
+                    document.querySelectorAll('[data-type="selectAttivita"]')
+                        .forEach(el => {
+                            if (!el.value){
+                                disable = true;
+                            }
+                        })
+                    button.disabled = disable;
+                });
+            });
+
+        document.getElementById('save_activity').addEventListener('click',function(){
+
+            const tipoAct = document.getElementById('attivita');
+            const minutiAttivita = document.getElementById('activityCount');
+
+            if (tipoAct.value){
+                this.disabled = true;
+
+                fetch('/attivita/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify({
+                        tipo: tipoAct.value,
+                        minutiAttivita : minutiAttivita.textContent
+                    })
+                })
+                    .then(response => {
+                        return response.json().then(data => {
+                            if (!response.ok) {
+                                throw new Error(data.error || 'Errore di salvataggio');
+                            }
+                            return data;
+                        });
+                    })
+                    .then(data => {
+                        console.log('Salvato:', data);
+
+                        chart.data.datasets[0].data = [
+                            data.carboidrati,
+                            data.grassi,
+                            data.proteine
+                        ]
+
+                        chart.update();
+
+                        Swal.fire({
+                            toast: true,
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Attività inserita con successo',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true
+                        });
+
+                    })
+                    .catch(error => {
+                        console.error('Errore:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: error.message,
+                            confirmButtonColor: '#d33'
+                        });
+                    })
+                    .finally(() => {
+                        this.disabled = false;
+                    })
+
+            }
+
+        })
 
         document.getElementById('save_button').addEventListener('click',function(){
             const pasto = document.getElementById('pasto');
@@ -510,6 +591,9 @@
             }
 
         })
+
+
+
     </script>
 
                     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

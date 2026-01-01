@@ -134,6 +134,14 @@ final class PrivateareaController extends AbstractController
         ]);
     }
 
+    #[Route('/obbiettiviarea', name: 'obbiettivi_area')] //directory,nome
+    public function obbiettiviArea(): Response
+    {
+        return $this->render('privatearea/obbiettivi.html.twig', [
+            'controller_name' => 'PrivateareaController',
+        ]);
+    }
+
     #[Route('/pasto/create', name: 'pasto_create', methods: ['POST'])]
     public function create(
         Request $request,

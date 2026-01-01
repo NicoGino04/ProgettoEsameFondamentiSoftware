@@ -14,7 +14,10 @@
 /* HEADER */
 .meal-selector-header {
     padding: 0.7rem 1.25rem;
-    
+    padding: 0.7rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
 }
 
 .meal-selector-header h3 {
@@ -22,6 +25,19 @@
     font-weight: 500;
 }
 
+.meal-selector-header span {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.meal-selector-header span img {
+    max-width: 85%;
+    max-height: 100%;
+}
 /* BODY */
 .meal-selector-body {
     padding: 0.9rem 1.5rem;

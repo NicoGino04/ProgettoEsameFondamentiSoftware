@@ -17,12 +17,14 @@
     <!-- Styles -->
     <!-- <link rel="stylesheet" href="css/background.css"> -->
     <link rel="stylesheet" href="css/NewBackground.css">
+    <link rel="stylesheet" href="css/MiniSlider.css">
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/lista.css">
     <link rel="stylesheet" href="css/slider.css">
 </head>
 
 <body>
+
     <!-- Animated Stars Background 
     <div id="stars"></div>
     <div id="stars2"></div>
@@ -154,7 +156,7 @@
             <br>
             <span>PRIMA</span>
             <br>
-            <span>DI TUTTO</span>
+            <span>DI</span> <span>TUTTO</span>
         </div>
 
         <div class="slider">
@@ -188,21 +190,112 @@
                 </div>
             </div>
         </div> 
-    
+        
+            <!-- Navigation Arrows -->
+            <button class="slider__arrow slider__arrow--prev" aria-label="Previous slide">‹</button>
+            <button class="slider__arrow slider__arrow--next" aria-label="Next slide">›</button>
 
-        <!-- Navigation Arrows -->
-        <button class="slider__arrow slider__arrow--prev" aria-label="Previous slide">‹</button>
-        <button class="slider__arrow slider__arrow--next" aria-label="Next slide">›</button>
-
-        <!-- Dots Navigation -->
-        <div class="slider__controls">
-            <button class="slider__dot active" aria-label="Go to slide 1"></button>
-            <button class="slider__dot" aria-label="Go to slide 2"></button>
-            <button class="slider__dot" aria-label="Go to slide 3"></button>
-            <button class="slider__dot" aria-label="Go to slide 4"></button>
         </div>
 
+        <div id="title1">
+            <span>INFORMAZIONI</span>
+        </div>
+<!-- Content Slider -->
+        <div class="card">
+  <input type="radio" name="select" id="slide_1" checked>
+  <input type="radio" name="select" id="slide_2">
+  <input type="radio" name="select" id="slide_3">
+  <input type="checkbox" id="slideImg">
+
+  <div class="slider1">
+    <label for="slide_1" class="slide slide_1"></label>
+    <label for="slide_2" class="slide slide_2"></label>
+    <label for="slide_3" class="slide slide_3"></label>
+  </div>
+
+  <div class="inner_part">
+    <label for="slideImg" class="img">
+      <img class="img_1" src="https://c4.wallpaperflare.com/wallpaper/978/131/617/kiz-kulesi-turkey-istanbul-maiden-s-tower-wallpaper-preview.jpg">
+    </label>
+    <div class="content content_1">
+      <div class="title">İstanbul</div>
+      <div class="text">
+        Istanbul, a fascinating city built on two Continents, divided by the Bosphorus Strait. This is one of the greatest cities in the world.
+      </div>
     </div>
+  </div>
+
+  <div class="inner_part">
+    <label for="slideImg" class="img">
+      <img class="img_2" src="https://c4.wallpaperflare.com/wallpaper/649/96/56/ankara-cityscape-night-night-sky-wallpaper-preview.jpg">
+    </label>
+    <div class="content content_2">
+      <div class="title">Ankara</div>
+      <div class="text">
+        Ankara is Turkey's beating heart, second largest city, located in the Central Anatolia region and home to the Grand National Assembly of Turkey.
+      </div>
+    </div>
+  </div>
+
+  <div class="inner_part">
+    <label for="slideImg" class="img">
+      <img class="img_3" src="https://c4.wallpaperflare.com/wallpaper/620/34/558/turkey-izmir-mountains-wallpaper-preview.jpg">
+    </label>
+    <div class="content content_3">
+      <div class="title">İzmir</div>
+      <div class="text">Located on the shores of the Aegean Sea, west of the Anatolian Peninsula, İzmir is the third-largest city in Turkey.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card1">
+  <input type="radio" name="select1" id="slide2_1" checked>
+  <input type="radio" name="select1" id="slide2_2">
+  <input type="radio" name="select1" id="slide2_3">
+  <input type="checkbox" id="slideImg">
+
+  <div class="slider2">
+    <label for="slide2_1" class="slide2 slide2_1"></label>
+    <label for="slide2_2" class="slide2 slide2_2"></label>
+    <label for="slide2_3" class="slide2 slide2_3"></label>
+  </div>
+
+  <div class="inner_part1">
+    <label for="slideImg1" class="img1">
+      <img class="img1_1" src="https://c4.wallpaperflare.com/wallpaper/978/131/617/kiz-kulesi-turkey-istanbul-maiden-s-tower-wallpaper-preview.jpg">
+    </label>
+    <div class="content1 content1_1">
+      <div class="title1">İstanbul</div>
+      <div class="text1">
+        Istanbul, a fascinating city built on two Continents, divided by the Bosphorus Strait. This is one of the greatest cities in the world.
+      </div>
+    </div>
+  </div>
+
+  <div class="inner_part1">
+    <label for="slideImg1" class="img1">
+      <img class="img1_2" src="https://c4.wallpaperflare.com/wallpaper/649/96/56/ankara-cityscape-night-night-sky-wallpaper-preview.jpg">
+    </label>
+    <div class="content1 content1_2">
+      <div class="title1">Ankara</div>
+      <div class="text1">
+        Ankara is Turkey's beating heart, second largest city, located in the Central Anatolia region and home to the Grand National Assembly of Turkey.
+      </div>
+    </div>
+  </div>
+
+  <div class="inner_part1">
+    <label for="slideImg1" class="img1">
+      <img class="img1_3" src="https://c4.wallpaperflare.com/wallpaper/620/34/558/turkey-izmir-mountains-wallpaper-preview.jpg">
+    </label>
+    <div class="content1 content1_3">
+      <div class="title1">İzmir</div>
+      <div class="text1">Located on the shores of the Aegean Sea, west of the Anatolian Peninsula, İzmir is the third-largest city in Turkey.
+      </div>
+    </div>
+  </div>
+</div>
 
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/628c8d2499.js" crossorigin="anonymous" defer></script>
@@ -216,7 +309,6 @@
     <br>
     <br>
     <br>
-
     <!-- Footer  -->
 
     <!-- Bootstrap JS and dependencies -->
@@ -224,7 +316,7 @@
     <!-- Font Awesome (for social icons) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
 
-            <footer class="footer">
+           <!-- <footer class="footer">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -245,7 +337,8 @@
                 </div>
             </div>
         </div>
-    </footer>
+    </footer> -->
+
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

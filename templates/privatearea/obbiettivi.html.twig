@@ -1,11 +1,10 @@
 {% extends 'base.html.twig' %} {% block title %}AreaPrivata!{% endblock %} {% block stylesheets %}
 
 <link rel="stylesheet" href="css/APnavbar.css">
-<link rel="stylesheet" href="css/APcard.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<link rel="stylesheet" href="css/APimpostazioni.css">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-<link rel="stylesheet" href="css/APlinechart.css">
- {% endblock %} {% block body %}
+{% endblock %} {% block body %}
 
 <div class="layout has-sidebar fixed-sidebar fixed-header">
     <aside id="sidebar" class="sidebar break-point-sm has-bg-image">
@@ -154,10 +153,11 @@
                     </ul>
                 </nav>
             </div>
+
             <div class="sidebar-footer">
                 <div class="footer-box">
                     <div>
-                        <img class="react-logo" src="https://user-images.githubusercontent.com/25878302/213938106-ca8f0485-3f30-4861-9188-2920ed7ab284.png" alt="react" />
+                        <img class="react-logo" src="{{ asset('images/icons/fitcenter.png') }}" alt="FitCenter" />
                     </div>
                     <div style="padding: 0 10px">
                         <span style="display: block; margin-bottom: 10px">Pro sidebar is also available as a react package
@@ -180,21 +180,11 @@
         <a id="btn-toggle" class="header-toggle">
             <i class="ri-menu-line"></i>
         </a>
-        
-                        <div class="charts-grid">
-          <div class="chart-card large">
-            <div class="card-header">
-              <h3 class="card-title">Revenue Overview</h3>
-              <div class="card-actions">
-                <button class="filter-btn active">Week</button>
-                <button class="filter-btn">Month</button>
-                <button class="filter-btn">Year</button>
-              </div>
-            </div>
-            <div id="chartContainer" style="height: 300px; width: 100%;"></div>
-          </div>
                         
-                        
+
+
+
+                        </div>
                         <footer class="footer">
                             <small style="margin-bottom: 20px; display: inline-block">
                                 © 2025 realizzato con <3 da - Gruppo 11 
@@ -220,6 +210,5 @@
                     <script src="https://unpkg.com/@popperjs/core@2"></script>
                     <script src="javascript/APnavbarjs.js"></script>
                     <script src="javascript/APcounter.js"></script>
-                    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
-                    <script src="{{ asset('javascript/splinechart.js') }}"></script>
+
                     {% endblock %}

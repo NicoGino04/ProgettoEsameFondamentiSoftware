@@ -110,6 +110,7 @@ final class PrivateareaController extends AbstractController
         $attivita->setTipo($data['tipo']); // normale, grassa, ecc
         $attivita->setData();        // data automatica
         $attivita->setUser($this->getUser());
+        $attivita->setMinutiAtt($data['minutiAtt']);
 
         $em->persist($attivita);
         $em->flush();

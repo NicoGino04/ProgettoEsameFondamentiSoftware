@@ -494,6 +494,12 @@
                                                 </div>
                                             </div>
 
+                                             <div class="counter">
+                                                 <button class="decrease">-</button>
+                                                 <span id="activityCount" class="count">0</span>
+                                                 <button class="increase">+</button>
+                                             </div>
+
                                             <div class="card-footer">
                                                 <button disabled id="save_activity" class="save-btn">Salva</button>
                                             </div>
@@ -572,6 +578,7 @@
         document.getElementById('save_activity').addEventListener('click',function(){
 
             const tipoAct = document.getElementById('attivita');
+            const minutiAttivita = 10 * documenti.getElementById('activityCount');
 
             if (tipoAct.value){
                 this.disabled = true;
@@ -583,7 +590,8 @@
                         'X-Requested-With': 'XMLHttpRequest'
                     },
                     body: JSON.stringify({
-                        tipo: tipoAct.value
+                        tipo: tipoAct.value,
+                        minutiAttivita : minutiAttivita
                     })
                 })
                     .then(response => {

@@ -24,6 +24,9 @@ class Activity
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    #[ORM\Column(options: ['default' => 0])]
+    private ?int $minutiAtt = 0;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -61,6 +64,18 @@ class Activity
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getMinutiAtt(): ?int
+    {
+        return $this->minutiAtt;
+    }
+
+    public function setMinutiAtt(?int $minutiAtt): static
+    {
+        $this->minutiAtt = $minutiAtt;
 
         return $this;
     }

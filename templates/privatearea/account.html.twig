@@ -1,9 +1,10 @@
 {% extends 'base.html.twig' %} {% block title %}AreaPrivata!{% endblock %} {% block stylesheets %}
 
 <link rel="stylesheet" href="css/APnavbar.css">
-<link rel="stylesheet" href="css/APcard.css">
+
+<link rel="stylesheet" href="css/APimpostazioni.css">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-<link rel="stylesheet" href="css/APprogbar.css"> {% endblock %} {% block body %}
+{% endblock %} {% block body %}
 
 <div class="layout has-sidebar fixed-sidebar fixed-header">
     <aside id="sidebar" class="sidebar break-point-sm has-bg-image">
@@ -14,11 +15,10 @@
         <div class="sidebar-layout">
             <div class="sidebar-header">
                 <div class="pro-sidebar-logo">
-                    <div>P</div>
-                    <h5>
+                    <div>allah</div>
+                    <h5>Ciao, <br>
                         {{ app.user.email }}
                         {% for role in app.user.roles %}
-                            <br>{{ role }}
                         {% endfor %}
                     </h5>
 
@@ -28,85 +28,18 @@
                 <nav class="menu open-current-submenu">
                     <ul>
                         <li class="menu-header"><span> GENERALE </span></li>
-                        <li class="menu-item sub-menu">
-                            <a href="#">
+                        
+                        <li class="menu-item">
+                            <a href="{{path("app_privatearea")}}">
                                 <span class="menu-icon">
-                      <i class="ri-vip-diamond-fill"></i>
-                    </span>
-                                <span class="menu-title">Home</span>
-                                <span class="menu-suffix">
-                      <span class="badge primary">Hot</span>
+                                    <i class="ri-home-2-fill"></i>
                                 </span>
+                                <span class="menu-title">Home</span>
+                                <span class="badge primary">Hot</span>
                             </a>
-                            <div class="sub-menu-list">
-                                <ul>
-                                    <li class="menu-item">
-                                        <a href="{{path('app_home')}}">
-                                            <span class="menu-title">Home</span>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item">
-                                        <a href="{{ logout_path() }}">
-                                            <span class="menu-title">Logout</span>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item sub-menu">
-                                        <a href="#">
-                                            <span class="menu-title">Forms</span>
-                                        </a>
-                                        <div class="sub-menu-list">
-                                            <ul>
-                                                <li class="menu-item">
-                                                    <a href="#">
-                                                        <span class="menu-title">Input</span>
-                                                    </a>
-                                                </li>
-                                                <li class="menu-item">
-                                                    <a href="#">
-                                                        <span class="menu-title">Select</span>
-                                                    </a>
-                                                </li>
-                                                <li class="menu-item sub-menu">
-                                                    <a href="#">
-                                                        <span class="menu-title">More</span>
-                                                    </a>
-                                                    <div class="sub-menu-list">
-                                                        <ul>
-                                                            <li class="menu-item">
-                                                                <a href="#">
-                                                                    <span class="menu-title">CheckBox</span>
-                                                                </a>
-                                                            </li>
-                                                            <li class="menu-item">
-                                                                <a href="#">
-                                                                    <span class="menu-title">Radio</span>
-                                                                </a>
-                                                            </li>
-                                                            <li class="menu-item sub-menu">
-                                                                <a href="#">
-                                                                    <span class="menu-title">Want more ?</span>
-                                                                    <span class="menu-suffix">&#x1F914;</span>
-                                                                </a>
-                                                                <div class="sub-menu-list">
-                                                                    <ul>
-                                                                        <li class="menu-item">
-                                                                            <a href="#">
-                                                                                <span class="menu-prefix">&#127881;</span>
-                                                                                <span class="menu-title">You made it </span>
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
                         </li>
+
+
                         <li class="menu-item sub-menu">
                             <a href="#">
                                 <span class="menu-icon">
@@ -117,125 +50,110 @@
                             <div class="sub-menu-list">
                                 <ul>
                                     <li class="menu-item">
-                                        <a href="#">
+                                        <a href="{{path("graphics_page")}}">
+                                        <span class="menu-icon">
+                                            <i class="ri-pie-chart-2-fill"></i>
+                                        </span>
                                             <span class="menu-title">Pie chart</span>
                                         </a>
                                     </li>
                                     <li class="menu-item">
-                                        <a href="#">
+                                        <a href="{{path("line_graphics_page")}}">
+                                        <span class="menu-icon">
+                                            <i class="ri-line-chart-line"></i>
+                                        </span>
                                             <span class="menu-title">Line chart</span>
                                         </a>
                                     </li>
-                                    <li class="menu-item">
-                                        <a href="#">
-                                            <span class="menu-title">Bar chart</span>
-                                        </a>
-                                    </li>
                                 </ul>
                             </div>
                         </li>
                         <li class="menu-item sub-menu">
                             <a href="#">
                                 <span class="menu-icon">
-                      <i class="ri-shopping-cart-fill"></i>
+                      <i class="ri-dashboard-fill"></i>
                     </span>
-                                <span class="menu-title">Notizie</span>
+                                <span class="menu-title">Dashboard</span>
                             </a>
                             <div class="sub-menu-list">
                                 <ul>
                                     <li class="menu-item">
                                         <a href="#">
-                                            <span class="menu-title">Products</span>
+                                        <span class="menu-icon">
+                                            <i class="ri-calendar-2-fill"></i>
+                                        </span>
+                                            <span class="menu-title">Calendario</span>
                                         </a>
                                     </li>
                                     <li class="menu-item">
-                                        <a href="#">
-                                            <span class="menu-title">Orders</span>
+                                        <a href="{{path('obbiettivi_area')}}">
+                                        <span class="menu-icon">
+                                            <i class="ri-profile-fill"></i>
+                                        </span>
+                                            <span class="menu-title">Obbiettivi</span>
                                         </a>
                                     </li>
-                                    <li class="menu-item">
-                                        <a href="#">
-                                            <span class="menu-title">credit card</span>
-                                        </a>
-                                    </li>
+                                    
                                 </ul>
                             </div>
                         </li>
-                        <li class="menu-item sub-menu">
-                            <a href="#">
-                                <span class="menu-icon">
-                      <i class="ri-global-fill"></i>
-                    </span>
-                                <span class="menu-title">Progressi</span>
-                            </a>
-                            <div class="sub-menu-list">
-                                <ul>
-                                    <li class="menu-item">
-                                        <a href="#">
-                                            <span class="menu-title">Google maps</span>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item">
-                                        <a href="#">
-                                            <span class="menu-title">Open street map</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="menu-item sub-menu">
-                            <a href="#">
-                                <span class="menu-icon">
-                     <i class="ri-paint-brush-fill"></i>
-                    </span>
-                                <span class="menu-title">Theme</span>
-                            </a>
-                            <div class="sub-menu-list">
-                                <ul>
-                                    <li class="menu-item">
-                                        <a href="#">
-                                            <span class="menu-title">Dark</span>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item">
-                                        <a href="#">
-                                            <span class="menu-title">Light</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
+                        
+                        
                         <li class="menu-header" style="padding-top: 20px"><span> EXTRA </span></li>
-                        <li class="menu-item">
+                        <li class="menu-item sub-menu">
                             <a href="#">
                                 <span class="menu-icon">
-                      <i class="ri-book-2-fill"></i>
-                    </span>
-                                <span class="menu-title">Account</span>
-                                <span class="menu-suffix">
-                      <span class="badge secondary">Beta</span>
+                                    <i class="ri-account-circle-fill"></i>
                                 </span>
+                                <span class="menu-title">Account</span>
                             </a>
+                            <div class="sub-menu-list">
+                                <ul>
+                                    <li class="menu-item">
+                                        <a href="{{path('account_page')}}">
+                                        <span class="menu-icon">
+                                            <i class="ri-account-pin-circle-fill"></i>
+                                        </span>
+                                            <span class="menu-title">
+                                                {{ app.user.email }}
+                                                {% for role in app.user.roles %}
+                                                {% endfor %}
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="#">
+                                        <span class="menu-icon">
+                                            <i class="ri-arrow-left-right-fill"></i>
+                                        </span>
+                                            <span class="menu-title">Cambia Account</span>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="{{ logout_path() }}">
+                                        <span class="menu-icon">
+                                            <i class="ri-logout-box-r-fill"></i>
+                                        </span>
+                                            <span class="menu-title">Log-Out</span>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="#">
+                                        <span class="menu-icon">
+                                            <i class="ri-settings-2-fill"></i>
+                                        </span>
+                                            <span class="menu-title">Impostazioni</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
-                        <li class="menu-item">
-                            <a href="#">
-                                <span class="menu-icon">
-                      <i class="ri-calendar-fill"></i>
-                    </span>
-                                <span class="menu-title">Calendar</span>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="#">
-                                <span class="menu-icon">
-                      <i class="ri-service-fill"></i>
-                    </span>
-                                <span class="menu-title">Examples</span>
-                            </a>
-                        </li>
+
+                        
                     </ul>
                 </nav>
             </div>
+
             <div class="sidebar-footer">
                 <div class="footer-box">
                     <div>
@@ -264,183 +182,84 @@
         </a>
                         </div>
                         <div class="content-main">
+                        <div class="settings-container">
+                        <h1>Impostazioni Account</h1>
 
-
-
-
-                            <div class="dashboard-layout">
-
-                                <aside class="dashboard-left">
-                                    <div class="cardPB">
-                                        <div class="cardPB-header">
-                                            <div>
-                                                <span><img src="{{ asset('images/icons/iconPB1.png') }}" alt=""></span>
-                                                <h3>Achivements</h3>
-                                            </div>
-                                        </div>
-
-                                        <div class="cardPB-body">
-                                            <div class="pb-item">
-                                                <label>Bicchieri d'acqua (10)</label>
-                                                <progress value="0" max="100" style="--value: 0; --max: 100;"></progress>
-                                            </div>
-
-                                            <div class="pb-item">
-                                                <label>Ora di attività fisica (week)</label>
-                                                <progress value="25" max="100" style="--value: 25; --max: 100;"></progress>
-                                            </div>
-
-                                            <div class="pb-item">
-                                                <label>Task 3</label>
-                                                <progress value="50" max="100" style="--value: 50; --max: 100;"></progress>
-                                            </div>
-
-                                            <div class="pb-item">
-                                                <label>Task 4</label>
-                                                <progress value="75" max="100" style="--value: 75; --max: 100;"></progress>
-                                            </div>
-
-                                            <div class="pb-item">
-                                                <label>Task 5</label>
-                                                <progress value="100" max="100" style="--value: 100; --max: 100;"></progress>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </aside>
-
-                                <section class="dashboard-right">
-                                    <div class="card-grid">
-                                        <article class="card">
-                                            <div class="card-header">
-                                                <div>
-                                                    <span><img src="{{ asset('images/icons/iconB2.png') }}" /></span>
-                                                    <h3>Bicchieri d'acqua</h3>
-                                                </div>
-                                            </div>
-                                            <div class="card-body">
-                                                <p>Quanti bicchieri d'acqua hai bevuto oggi?</p>
-                                                <div class="counter">
-                                                    <button class="decrease">-</button>
-                                                    <span class="count">0</span>
-                                                    <button class="increase">+</button>
-                                                </div>
-                                            </div>
-                                            <div class="card-footer">
-                                                <button class="save-btn">Salva</button>
-                                            </div>
-                                        </article>
-
-
-
-                                        <article class="card">
-                                            <div class="card-header">
-                                                <div>
-                                                    <span><img src="{{ asset('images/icons/iconM2.png') }}" /></span>
-                                                    <h3>Ore di sonno</h3>
-                                                </div>
-                                            </div>
-                                            <div class="card-body">
-                                                <p>Quante ore di sonno hai fatto?</p>
-                                                <div class="counter">
-                                                    <button class="decrease">-</button>
-                                                    <span class="count">0</span>
-                                                    <button class="increase">+</button>
-                                                </div>
-                                            </div>
-                                            <div class="card-footer">
-                                                <button class="save-btn">Salva</button>
-                                            </div>
-                                        </article>
-
-
-                                        <article class="card">
-                                            <div class="card-header">
-                                                <div>
-                                                    <span><img src="{{ asset('images/icons/iconS1.png') }}" /></span>
-                                                    <h3>Ore di sole</h3>
-                                                </div>
-                                            </div>
-                                            <div class="card-body">
-                                                <p>Quante ore di sole hai fatto?</p>
-                                                <div class="counter">
-                                                    <button class="decrease">-</button>
-                                                    <span class="count">0</span>
-                                                    <button class="increase">+</button>
-                                                </div>
-                                            </div>
-                                            <div class="card-footer">
-                                                <button class="save-btn">Salva</button>
-                                            </div>
-                                        </article>
-                                    </div>
-                                </section>
-
+                        <form class="settings-form">
+                            <!-- Avatar -->
+                            <div class="avatar-section">
+                                <img src="" alt="Avatar" class="avatar-preview">
+                                <label class="upload-btn">
+                                    Cambia avatar
+                                    <input type="file" accept="image/*" hidden>
+                                </label>
                             </div>
 
+                            <!-- Email -->
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" placeholder="esempio@email.com">
+                            </div>
 
-                        </div>
-                        <span style="display: inline-block">
-              Responsive layout with advanced sidebar menu built with SCSS and vanilla Javascript
-            </span>
-                        <br />
-                        <span>
-              Full Code and documentation available on
-              <a href="https://github.com/azouaoui-med/pro-sidebar-template" target="_blank"
-                >Github</a
-              >
-            </span>
-                        <div style="margin-top: 10px">
-                            <a href="https://github.com/azouaoui-med/pro-sidebar-template" target="_blank">
-                                <img alt="GitHub stars" src="https://img.shields.io/github/stars/azouaoui-med/pro-sidebar-template?style=social" />
-                            </a>
-                            <a href="https://github.com/azouaoui-med/pro-sidebar-template" target="_blank">
-                                <img alt="GitHub forks" src="https://img.shields.io/github/forks/azouaoui-med/pro-sidebar-template?style=social" />
-                            </a>
-                        </div>
-                        <div>
-                            <h2>Features</h2>
-                            <ul>
-                                <li>Fully responsive</li>
-                                <li>Collapsable sidebar</li>
-                                <li>Multi level menu</li>
-                                <li>RTL support</li>
-                                <li>Customizable</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h2>Resources</h2>
-                            <ul>
-                                <li>
-                                    <a target="_blank" href="https://github.com/azouaoui-med/css-pro-layout">
-                  Css Pro Layout</a
-                >
-              </li>
-              <li>
-                <a target="_blank" href="https://github.com/popperjs/popper-core"> Popper Core</a>
-                                </li>
-                                <li>
-                                    <a target="_blank" href="https://remixicon.com/"> Remix Icons</a>
-                                </li>
-                            </ul>
+                            <!-- Username -->
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" id="username" placeholder="nomeutente">
+                            </div>
+
+                            <!-- Altezza -->
+                            <div class="form-group">
+                                <label for="height">Altezza (cm)</label>
+                                <input type="number" id="height" min="0">
+                            </div>
+
+                            <!-- Età -->
+                            <div class="form-group">
+                                <label for="age">Età</label>
+                                <input type="number" id="age" min="0">
+                            </div>
+
+                            <!-- Peso -->
+                            <div class="form-group">
+                                <label for="weight">Peso (kg)</label>
+                                <input type="number" id="weight" min="0">
+                            </div>
+
+                            <!-- Sesso -->
+                            <div class="form-group">
+                                <label for="gender">Sesso</label>
+                                <select id="gender">
+                                    <option value="">Seleziona...</option>
+                                    <option value="male">Maschio</option>
+                                    <option value="female">Femmina</option>
+                                    <option value="other">Altro</option>
+                                </select>
+                            </div>
+
+                            <!-- Salva -->
+                            <button type="submit" class="save-btn">Salva modifiche</button>
+                        </form>
+                    </div>
+
+
+
                         </div>
                         <footer class="footer">
                             <small style="margin-bottom: 20px; display: inline-block">
-              © 2025 made with
-              <span style="color: red; font-size: 18px">&#10084;</span> by -
-              <a target="_blank" href="https://azouaoui.netlify.app"> Mohamed Azouaoui </a>
-            </small>
+                                © 2025 realizzato con <3 da - Gruppo 11 
+                            </small>
                             <br />
                             <div class="social-links">
-                                <a href="https://github.com/azouaoui-med" target="_blank">
+                                <a href="" target="_blank">
                                     <i class="ri-github-fill ri-xl"></i>
                                 </a>
-                                <a href="https://twitter.com/azouaoui_med" target="_blank">
-                                    <i class="ri-twitter-fill ri-xl"></i>
+                                <a href="" target="_blank">
+                                    <i class="ri-instagram-fill ri-xl"></i>
                                 </a>
-                                <a href="https://codepen.io/azouaoui-med" target="_blank">
-                                    <i class="ri-codepen-fill ri-xl"></i>
+                                <a href="" target="_blank">
+                                    <i class="ri-facebook-fill ri-xl"></i>
                                 </a>
-                                <a href="https://www.linkedin.com/in/mohamed-azouaoui/" target="_blank">
+                                <a href="" target="_blank">
                                     <i class="ri-linkedin-box-fill ri-xl"></i>
                                 </a>
                             </div>

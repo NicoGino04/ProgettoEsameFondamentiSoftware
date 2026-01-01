@@ -51,6 +51,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         title: {
                             display: true,
                             text: '' //testo sopra la legenda
+                        },
+                        legend: {
+                            display: true,
+                            position: 'bottom'
                         }
                     }
                 }

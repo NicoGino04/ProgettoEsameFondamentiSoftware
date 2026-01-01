@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.card').forEach(card => {
+    document.querySelectorAll('.card[data-type="goals-card"]').forEach(card => {
         const countEl = card.querySelector('.count');
         const btnInc = card.querySelector('.increase');
         const btnDec = card.querySelector('.decrease');

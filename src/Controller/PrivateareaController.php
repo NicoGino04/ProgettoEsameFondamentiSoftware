@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Activity;
 use App\Entity\Pasto;
 use App\Entity\User;
 use App\Entity\Goal;
+use App\Repository\ActivityRepository;
 use App\Repository\PastoRepository;
 use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,7 +21,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 final class PrivateareaController extends AbstractController
 {
-    public function __construct(private readonly PastoRepository $pastoRepository)
+    public function __construct(private readonly PastoRepository $pastoRepository, private readonly EntityManagerInterface $entityManager, private readonly ActivityRepository $activityRepository)
     {
     }
 
@@ -89,6 +91,40 @@ final class PrivateareaController extends AbstractController
         ]);
     }
 
+    #[Route('/attivita/create', name: 'attivita_create', methods: ['POST'])]
+    public function createActivity(
+        Request $request,
+        EntityManagerInterface $em
+    ): JsonResponse {
+
+        if (!$this->getUser()){
+            return new JsonResponse([
+                'status' => 'error',
+                'error' => 'Utente non loggato'
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        $data = json_decode($request->getContent(), true);
+
+        $attivita = new Activity();
+        $attivita->setTipo($data['tipo']); // normale, grassa, ecc
+        $attivita->setData();        // data automatica
+        $attivita->setUser($this->getUser());
+
+        $em->persist($attivita);
+        $em->flush();
+
+        $calorie = $this->getCalorie();
+
+        return new JsonResponse([
+            'status' => 'ok',
+            'id' => $attivita->getId(),
+            'carboidrati' => $calorie['carboidrati'],
+            'grassi' => $calorie['grassi'],
+            'proteine' => $calorie['proteine'],
+        ]);
+    }
+
     #[Route('/linegraphicsarea', name: 'line_graphics_page')] //directory,nome
     public function lineGraphicsArea(): Response
     {
@@ -135,7 +171,31 @@ final class PrivateareaController extends AbstractController
     private function getCalorie(): array{
 
         $user = $this->getUser();
-        $valoreGiornaliero = $user->getBasale();
+        $calorieAttivita = 0;
+        $durataOre = 1;
+
+        $attivitaGiornaliere = $this->activityRepository->findByDateField($user);
+
+        foreach ($attivitaGiornaliere as $attivita){
+
+            switch ($attivita->getTipo()){
+                case 'nuoto': $met = 6.0; break;
+                case 'camminata': $met = 3.5; break;
+                case 'corsa': $met = 8.0; break;
+                case 'basket': $met = 8.0; break;
+                case 'pallavolo': $met = 4.0; break;
+                case 'calcio': $met = 7.0; break;
+                case 'tennis': $met = 7.3; break;
+                case 'padel': $met = 6.0; break;
+                case 'pallamano': $met = 8.0; break;
+            }
+
+            $calorieAttivita += ($met * $user->getPeso() * $durataOre);
+
+        }
+
+        $valoreGiornaliero = $user->getBasale() + $calorieAttivita;
+
         $pastiGiornalieri = $this->pastoRepository->findByDateField($user);
 
         $kcal_carbo = 0;

@@ -1,3 +1,10 @@
+:root {
+    /* OMBRA CARD UNIFICATA */
+    --card-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.06),
+  0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
 .layout {
     z-index: 1;
     display: flex;
@@ -111,7 +118,7 @@
 }
 
 .sidebar {
-    color: #7d84ab;
+    color: #EAF1FB; /* colore ciao user */
     overflow-x: hidden !important;
     position: relative;
 }
@@ -157,7 +164,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    background-color: #052652;
+    background-color: #052652; /* colore sfondo navbar */
     z-index: 2;
 }
 
@@ -228,7 +235,7 @@
     font-size: 0.8em;
     letter-spacing: 2px;
     transition: opacity 0.3s ease-in-out;
-    opacity: 0.5;
+    opacity: 0.7;
 }
 
 .layout .sidebar .menu .menu-item a {
@@ -236,7 +243,7 @@
     align-items: center;
     height: 50px;
     padding: 0 20px;
-    color: #7d84ab;
+    color: #C6D6EB; /* colore testo caselle menu */
 }
 
 .layout .sidebar .menu .menu-item a .menu-icon {
@@ -274,11 +281,11 @@
 }
 
 .layout .sidebar .menu .menu-item a:hover .menu-title {
-    color: #dee2ec;
+    color: #C6D6EB;
 }
 
 .layout .sidebar .menu .menu-item a:hover .menu-icon {
-    color: #dee2ec;
+    color: #C6D6EB;
 }
 
 .layout .sidebar .menu .menu-item a:hover .menu-icon i {
@@ -286,7 +293,7 @@
 }
 
 .layout .sidebar .menu .menu-item a:hover::after {
-    border-color: #dee2ec !important;
+    border-color: #C6D6EB !important;
 }
 
 .layout .sidebar .menu .menu-item.sub-menu {
@@ -311,7 +318,7 @@
 }
 
 .layout .sidebar .menu .menu-item.sub-menu.open>a {
-    color: #dee2ec;
+    color: #C6D6EB;
 }
 
 .layout .sidebar .menu .menu-item.sub-menu.open>a::after {
@@ -319,15 +326,15 @@
 }
 
 .layout .sidebar .menu .menu-item.active>a .menu-title {
-    color: #dee2ec;
+    color: #C6D6EB;
 }
 
 .layout .sidebar .menu .menu-item.active>a::after {
-    border-color: #dee2ec;
+    border-color: #C6D6EB;
 }
 
 .layout .sidebar .menu .menu-item.active>a .menu-icon {
-    color: #dee2ec;
+    color: #C6D6EB;
 }
 
 .layout .sidebar .menu>ul>.sub-menu>.sub-menu-list {
@@ -382,7 +389,7 @@
 }
 
 .layout .sidebar.collapsed .menu>ul>.menu-item.sub-menu>a:hover::after {
-    background-color: #dee2ec;
+    background-color: #C6D6EB;
 }
 
 .layout .sidebar.collapsed .menu>ul>.menu-item.sub-menu>.sub-menu-list {
@@ -394,17 +401,17 @@
 }
 
 .layout .sidebar.collapsed .menu>ul>.menu-item.active>a::after {
-    background-color: #dee2ec;
+    background-color: #C6D6EB;
 }
 
 .layout .sidebar.has-bg-image .menu.icon-shape-circle .menu-item a .menu-icon,
 .layout .sidebar.has-bg-image .menu.icon-shape-rounded .menu-item a .menu-icon,
 .layout .sidebar.has-bg-image .menu.icon-shape-square .menu-item a .menu-icon {
-    background-color: rgba(11, 26, 44, 0.6);
+    background-color: #073066;
 }
 
 .layout .sidebar.has-bg-image:not(.collapsed) .menu>ul>.sub-menu>.sub-menu-list {
-    background-color: rgba(11, 26, 44, 0.6);
+    background-color: #073066;
 }
 
 .layout.rtl .sidebar .menu .menu-item a .menu-icon {
@@ -476,10 +483,10 @@ a {
     align-items: center;
     justify-content: center;
     border-radius: 8px;
-    color: white;
+    color: white; /* colore logo menu */
     font-size: 24px;
     font-weight: 700;
-    background-color: #ff8100;
+    background-color: #34a8c5;
     margin-right: 10px;
 }
 
@@ -504,8 +511,9 @@ a {
     border-radius: 8px;
     width: 180px;
     min-width: 190px;
+    box-shadow: var(--card-shadow);
     margin: 0 auto;
-    background-color: #162d4a;
+    background-color: #005f9f;
 }
 
 .layout .sidebar .footer-box img.react-logo {
@@ -519,9 +527,8 @@ a {
     font-weight: 600;
     margin-bottom: 10px;
 }
-
+/*FRECCETTA PER NASCONDERE IL MENU*/
 .layout .sidebar .sidebar-collapser {
-    /*FRECCETTA PER NASCONDERE IL MENU*/
     transition: left 0.3s ease-in-out, right 0.3s ease-in-out, transform 0.3s ease-in-out;
     position: fixed;
     left: 240px;

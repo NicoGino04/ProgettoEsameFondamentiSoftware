@@ -110,6 +110,7 @@ body {
   padding: 6px 16px;
   border-radius: 8px;
   color: var(--text-secondary);
+  border: 1px solid transparent;
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
@@ -126,6 +127,10 @@ body {
   background: #33cbd6;
   border-color: #33cbd6;
   color: white;
+}
+
+.filter-btn.active:hover {
+  background: #2AB0B8;
 }
 
 .chart-container {

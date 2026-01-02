@@ -195,15 +195,16 @@ body {
     margin-top: 5px;
     padding: 0.5em 1em;
     border: none;
-    background-color: #1a4173;
+    background-color: #2EBBC6;
     color: #fff;
     border-radius: 6px;
     cursor: pointer;
     transition: 0.15s;
+    box-shadow: var(--card-shadow);
 }
 
 .card-footer .save-btn:hover {
-    background-color: #395983;
+    background-color: #2399A3;
 }
 .card-footer .save-btn:disabled {
     opacity: 0.4;
@@ -214,17 +215,16 @@ body {
 .meal-selector-card {
     grid-column: span 3; /* occupa 2 colonne su desktop */
 }
-
+.dashboard-left {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
 /* RESPONSIVE */
 @media (max-width: 1200px) {
     .meal-selector-card {
         grid-column: span 1; /* torna normale su tablet/mobile */
     }
-}
-.dashboard-left {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
 }
 @media (min-width: 1024px) {
     .dashboard-layout {

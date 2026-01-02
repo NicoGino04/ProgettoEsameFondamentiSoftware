@@ -3,6 +3,12 @@
     box-sizing: border-box;
 }
 
+:root{
+  --card-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.06),
+  0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
 body {
     background: #f4f6f8;
     margin: 0;
@@ -95,7 +101,8 @@ body {
 .save-btn {
     margin-top: 20px;
     padding: 12px;
-    background: #28a745;
+    background: #052652;
+    box-shadow: var(--card-shadow);
     color: white;
     font-size: 16px;
     border: none;
@@ -104,5 +111,5 @@ body {
 }
 
 .save-btn:hover {
-    background: #218838;
+    background: #041C3F;
 }

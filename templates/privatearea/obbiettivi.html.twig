@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %} {% block title %}AreaPrivata!{% endblock %} {% block stylesheets %}
 
 <link rel="stylesheet" href="css/APnavbar.css">
-
-<link rel="stylesheet" href="css/APimpostazioni.css">
+<link rel="stylesheet" href="css/APobbiettivicard.css">
+<link rel="stylesheet" href="css/APcard.css">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 {% endblock %} {% block body %}
 
@@ -153,7 +153,6 @@
                     </ul>
                 </nav>
             </div>
-
             <div class="sidebar-footer">
                 <div class="footer-box">
                     <div>
@@ -177,13 +176,41 @@
       <div id="overlay" class="overlay"></div>
       <main class="content">
         <div class="content-header">
-        <a id="btn-toggle" class="header-toggle">
-            <i class="ri-menu-line"></i>
-        </a>
-                        
+            <a id="btn-toggle" class="header-toggle">
+                <i class="ri-menu-line"></i>
+            </a>
+        
+                        <div class="wrapper">
+                        <div class="card">
+                            <h1>Inserimento Obiettivo</h1>
 
+                            <div class="field">
+                            <label>Nome</label>
+                            <input type="text" placeholder="Nome obiettivo">
+                            </div>
 
+                            <div class="field">
+                            <label>Data Fine</label>
+                            <input type="date">
+                            </div>
 
+                            <div class="field">
+                            <label>Tipo</label>
+                            <select>
+                                <option value="">Seleziona...</option>
+                                <option value="acqua">Acqua</option>
+                                <option value="sole">Ore di sonno</option>
+                                <option value="sole">Ore di sole</option>
+                            </select>
+                            </div>
+
+                            <div class="field">
+                            <label>Quantità</label>
+                            <input type="number" placeholder="Quantità">
+                            </div>
+
+                            <button>Crea obbiettivo</button>
+                        </div>
                         </div>
                         <footer class="footer">
                             <small style="margin-bottom: 20px; display: inline-block">

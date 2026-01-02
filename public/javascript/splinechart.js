@@ -4,9 +4,9 @@ window.onload = function () {
 			   
 			axisY: {
         lineColor: "#dcdcdc",        // colore asse Y
-				title: "Bicchieri d'acqua",
+				
         valueFormatString: "#0,,.",
-        suffix: " m",
+        //suffix: " m",
         gridColor: "#e6e6e6",     // colore più chiaro
         gridThickness: 0.8,         // spessore griglia orizzontale
 			},

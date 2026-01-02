@@ -20,7 +20,7 @@
   --bg-tertiary: #334155;
   
   --text-primary: #f8fafc;
-  --text-secondary: #cbd5e1;
+  --text-secondary: #282a32;
   --text-muted: #94a3b8;
   
   --border: #334155;
@@ -30,6 +30,13 @@
   --sidebar-width: 260px;
   --sidebar-collapsed: 80px;
   --topbar-height: 70px;
+  --card-shadow:
+        0 3px 3px rgba(0, 0, 0, 0.05),
+        0 5px 15px rgba(0, 0, 0, 0.05);
+  --card-shadow2:
+  0 2px 8px rgba(0, 0, 0, 0.06),
+  0 12px 30px rgba(0, 0, 0, 0.12);
+
 }
 
 body {  
@@ -64,14 +71,16 @@ body {
 /* Charts Grid */
 .charts-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr;
+  width: 90%;
   gap: 20px;
   margin-bottom: 30px;
+  margin-left:3.5vw
 }
 
 .chart-card {
   background: var(--bg-secondary);
-  border: 1px solid var(--border);
+  box-shadow: var(--card-shadow);
   border-radius: 16px;
   padding: 24px;
 }
@@ -86,7 +95,7 @@ body {
 .card-title {
   font-size: 18px;
   font-weight: 600;
-  color: var(--text-primary);
+  color: #282a32;
 }
 
 .card-actions {
@@ -96,7 +105,8 @@ body {
 
 .filter-btn {
   background: transparent;
-  border: 1px solid var(--border);
+  border: none;
+  box-shadow: var(--card-shadow2);
   padding: 6px 16px;
   border-radius: 8px;
   color: var(--text-secondary);
@@ -108,13 +118,13 @@ body {
 }
 
 .filter-btn:hover {
-  border-color: var(--primary);
-  color: var(--primary);
+  border-color: #33cbd6;
+  color: #33cbd6;
 }
 
 .filter-btn.active {
-  background: var(--primary);
-  border-color: var(--primary);
+  background: #33cbd6;
+  border-color: #33cbd6;
   color: white;
 }
 

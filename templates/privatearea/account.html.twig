@@ -4,6 +4,7 @@
 
 <link rel="stylesheet" href="css/APimpostazioni.css">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 {% endblock %} {% block body %}
 
 <div class="layout has-sidebar fixed-sidebar fixed-header">
@@ -28,7 +29,7 @@
                 <nav class="menu open-current-submenu">
                     <ul>
                         <li class="menu-header"><span> GENERALE </span></li>
-                        
+
                         <li class="menu-item">
                             <a href="{{path("app_privatearea")}}">
                                 <span class="menu-icon">
@@ -93,12 +94,12 @@
                                             <span class="menu-title">Obbiettivi</span>
                                         </a>
                                     </li>
-                                    
+
                                 </ul>
                             </div>
                         </li>
-                        
-                        
+
+
                         <li class="menu-header" style="padding-top: 20px"><span> EXTRA </span></li>
                         <li class="menu-item sub-menu">
                             <a href="#">
@@ -149,7 +150,7 @@
                             </div>
                         </li>
 
-                        
+
                     </ul>
                 </nav>
             </div>
@@ -195,49 +196,49 @@
                                 </label>
                             </div>
 
-                            <!-- Email -->
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" placeholder="esempio@email.com">
-                            </div>
+{#                            <!-- Email -->#}
+{#                            <div class="form-group">#}
+{#                                <label for="email">Email</label>#}
+{#                                <input type="email" id="email" placeholder="esempio@email.com">#}
+{#                            </div>#}
 
-                            <!-- Username -->
-                            <div class="form-group">
-                                <label for="username">Username</label>
-                                <input type="text" id="username" placeholder="nomeutente">
-                            </div>
+{#                            <!-- Username -->#}
+{#                            <div class="form-group">#}
+{#                                <label for="username">Username</label>#}
+{#                                <input type="text" id="username" placeholder="nomeutente">#}
+{#                            </div>#}
 
                             <!-- Altezza -->
                             <div class="form-group">
                                 <label for="height">Altezza (cm)</label>
-                                <input type="number" id="height" min="0">
+                                <input data-type="account-input" type="number" id="height" min="0">
                             </div>
 
                             <!-- Età -->
                             <div class="form-group">
                                 <label for="age">Età</label>
-                                <input type="number" id="age" min="0">
+                                <input data-type="account-input" type="number" id="age" min="0">
                             </div>
 
                             <!-- Peso -->
                             <div class="form-group">
                                 <label for="weight">Peso (kg)</label>
-                                <input type="number" id="weight" min="0">
+                                <input data-type="account-input" type="number" id="weight" min="0">
                             </div>
 
                             <!-- Sesso -->
                             <div class="form-group">
                                 <label for="gender">Sesso</label>
-                                <select id="gender">
+                                <select data-type="account-input" id="gender">
                                     <option value="">Seleziona...</option>
-                                    <option value="male">Maschio</option>
-                                    <option value="female">Femmina</option>
-                                    <option value="other">Altro</option>
+                                    <option value="maschio">Maschio</option>
+                                    <option value="femmina">Femmina</option>
+                                    <option value="altro">Altro</option>
                                 </select>
                             </div>
 
                             <!-- Salva -->
-                            <button type="submit" class="save-btn">Salva modifiche</button>
+                            <button disabled id="save_account" type="submit" class="save-btn">Salva modifiche</button>
                         </form>
                     </div>
 
@@ -246,7 +247,7 @@
                         </div>
                         <footer class="footer">
                             <small style="margin-bottom: 20px; display: inline-block">
-                                © 2025 realizzato con <3 da - Gruppo 11 
+                                © 2025 realizzato con <3 da - Gruppo 11
                             </small>
                             <br />
                             <div class="social-links">
@@ -266,6 +267,90 @@
                         </footer>
                         </main>
                     </div>
+
+                    <script>
+
+                        document.querySelectorAll('[data-type="account-input"]')
+                            .forEach(el => {
+                                el.addEventListener('change', function () {
+
+                                    let disable = false;
+                                    const button = document.getElementById("save_account");
+
+                                    document.querySelectorAll('[data-type="account-input"]')
+                                        .forEach(el => {
+                                            if (!el.value){
+
+                                                disable = true;
+                                            }
+                                        })
+                                    button.disabled = disable;
+                                });
+                            });
+
+                        document.getElementById('save_account').addEventListener('click',function(){
+
+                            const altezza = document.getElementById('height');
+                            const eta = document.getElementById('age');
+                            const peso = document.getElementById('weight');
+                            const sesso = document.getElementById('gender');
+
+                            if (altezza.value && eta.value && peso.value && sesso.value){
+                                this.disabled = true;
+
+                                fetch('/account/create', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-Requested-With': 'XMLHttpRequest'
+                                    },
+                                    body: JSON.stringify({
+                                        altezza: altezza.value,
+                                        eta : eta.value,
+                                        peso : peso.value,
+                                        sesso : sesso.value
+                                    })
+                                })
+                                    .then(response => {
+                                        return response.json().then(data => {
+                                            if (!response.ok) {
+                                                throw new Error(data.error || 'Errore di salvataggio');
+                                            }
+                                            return data;
+                                        });
+                                    })
+                                    .then(data => {
+                                        console.log('Salvato:', data);
+
+                                        Swal.fire({
+                                            toast: true,
+                                            position: 'top-end',
+                                            icon: 'success',
+                                            title: 'Parametri Account inseriti con successo',
+                                            showConfirmButton: false,
+                                            timer: 3000,
+                                            timerProgressBar: true
+                                        });
+
+                                    })
+                                    .catch(error => {
+                                        console.error('Errore:', error);
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: error.message,
+                                            confirmButtonColor: '#d33'
+                                        });
+                                    })
+                                    .finally(() => {
+                                        this.disabled = false;
+                                    })
+
+                            }
+
+                        })
+
+                    </script>
+
                     <script src="https://unpkg.com/@popperjs/core@2"></script>
                     <script src="javascript/APnavbarjs.js"></script>
                     <script src="javascript/APcounter.js"></script>

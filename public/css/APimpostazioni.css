@@ -110,6 +110,13 @@ body {
     cursor: pointer;
 }
 
+.save-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background-color: #ccc;
+    color: #666;
+}
+
 .save-btn:hover {
     background: #041C3F;
 }

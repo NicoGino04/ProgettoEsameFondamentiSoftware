@@ -126,6 +126,68 @@ final class PrivateareaController extends AbstractController
         ]);
     }
 
+    #[Route('/account/create', name: 'account_create', methods: ['POST'])]
+    public function createAccount(
+        Request $request,
+        EntityManagerInterface $em
+    ): JsonResponse {
+
+        if (!$this->getUser()){
+            return new JsonResponse([
+                'status' => 'error',
+                'error' => 'Utente non loggato'
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        $data = json_decode($request->getContent(), true);
+
+        $account = $this->getUser();
+        $account->setAltezza($data['altezza']);
+        $account->setEtà($data['eta']);
+        $account->setPeso($data['peso']);
+        $account->setSesso($data['sesso']);
+        $account->setBasale();
+
+        $em->persist($account);
+        $em->flush();
+
+        return new JsonResponse([
+            'status' => 'ok',
+            'id' => $account->getId()
+        ]);
+    }
+
+    #[Route('/obiettivo/create', name: 'obiettivo_create', methods: ['POST'])]
+    public function createGoal(
+        Request $request,
+        EntityManagerInterface $em
+    ): JsonResponse {
+
+        if (!$this->getUser()){
+            return new JsonResponse([
+                'status' => 'error',
+                'error' => 'Utente non loggato'
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        $data = json_decode($request->getContent(), true);
+        $rightDate = new \DateTime($data['dataGoal']);
+
+        $goal = new Goal();
+        $goal->setName($data['tipoGoal']);
+        $goal->setExpiration($rightDate);
+        $goal->setUser($this->getUser());
+        $goal->setGoalQuantity($data['quantitaGoal']);
+
+        $em->persist($goal);
+        $em->flush();
+
+        return new JsonResponse([
+            'status' => 'ok',
+            'id' => $goal->getId()
+        ]);
+    }
+
     #[Route('/linegraphicsarea', name: 'line_graphics_page')] //directory,nome
     public function lineGraphicsArea(): Response
     {

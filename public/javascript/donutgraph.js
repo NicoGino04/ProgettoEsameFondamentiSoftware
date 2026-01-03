@@ -55,7 +55,14 @@ document.addEventListener('DOMContentLoaded', function () {
                         legend: {
                             display: true,
                             position: 'bottom'
-                        }
+                        },
+                        tooltip: {
+                        backgroundColor: 'rgba(255, 255, 255, 0.95)', // colore hover
+                        titleColor: '#282a32',   // testo titolo scuro
+                        bodyColor: '#282a32',    // testo body scuro
+                        borderColor: 'rgba(0, 0, 0, 0.08)',
+                        borderWidth: 1
+                    }
                     }
                 }
             };

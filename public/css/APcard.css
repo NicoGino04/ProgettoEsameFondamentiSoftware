@@ -231,3 +231,71 @@ body {
         padding-left: 2.3rem;
     }
 }
+@media (max-width: 599px) {
+    .card-grid {
+        /* Aggiunge spazio ai lati della griglia per non far toccare i bordi */
+        padding-left: 10rem;
+        padding-right: 1rem;
+        /* Centra il contenuto della griglia */
+        justify-items: center; 
+    }
+
+    .card {
+        /* Impedisce alla card di allungarsi all'infinito e la centra */
+        width: 100%;
+        max-width: 340px; 
+        margin: 0 auto;
+    }
+
+    .content-main {
+        /* Centra il contenitore principale rispetto alla pagina */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* Modifica specifica per il tuo selettore esistente */
+@media (max-width: 1200px) {
+    .meal-selector-card {
+        grid-column: span 1;
+        /* Assicura che anche questa card speciale sia centrata su mobile */
+        margin: 0 auto; 
+        width: 100%;
+        max-width: 340px;
+    }
+}
+@media (max-width: 599px) {
+    .content-main {
+        padding-left: 15px !important; /* Sposta tutto il blocco verso destra */
+        padding-right: 15px !important;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .card-grid {
+        display: flex !important; /* Cambiamo da grid a flex per un controllo più semplice su mobile */
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        gap: 20px; /* Distanza uniforme tra tutte le card (verticale) */
+        padding: 0; /* Resettiamo il padding interno per non sommarlo a quello del main */
+    }
+
+    /* Questo selettore prende TUTTE le card, incluse le prime due e quella dell'acqua */
+    .card, .cardPB, .meal-selector-card, .progress-tracker-container {
+        width: 100% !important;
+        max-width: 340px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        /* Rimuove eventuali float o posizionamenti che creano il disallineamento */
+        float: none;
+    }
+
+    /* Spazio specifico per staccare il progress tracker e l'acqua */
+    .progress-tracker-container, .meal-selector-card {
+        margin-top: 10px !important; 
+    }
+}

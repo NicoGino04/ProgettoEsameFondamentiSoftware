@@ -33,9 +33,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         data.proteine
                     ],
                     backgroundColor: [
-                        'rgb(255, 99, 132)',
+                        'rgb(255, 205, 86)',
                         'rgba(43, 245, 87, 1)',
-                        'rgb(255, 205, 86)'
+                        'rgb(255, 99, 132)'
                     ],
                     hoverOffset: 4
                 }]

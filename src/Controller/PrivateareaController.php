@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Activity;
+use App\Entity\Dato;
 use App\Entity\Pasto;
 use App\Entity\User;
 use App\Entity\Goal;
 use App\Repository\ActivityRepository;
 use App\Repository\PastoRepository;
+use App\Repository\DatoRepository;
 use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,7 +23,8 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 final class PrivateareaController extends AbstractController
 {
-    public function __construct(private readonly PastoRepository $pastoRepository, private readonly EntityManagerInterface $entityManager, private readonly ActivityRepository $activityRepository)
+    public function __construct(private readonly PastoRepository $pastoRepository, private readonly EntityManagerInterface $entityManager,
+                                private readonly ActivityRepository $activityRepository, private readonly DatoRepository $datoRepository)
     {
     }
 
@@ -33,7 +36,7 @@ final class PrivateareaController extends AbstractController
         //$goals = $user->getGoals()->slice(0,5);
         /* @var Goal $goal */
         //topGoals = obiettivi sopra il 35%
-        $topGoals = $user->getGoals()->filter(static fn ($goal): bool => $goal->getPercentage() > 35);
+        $topGoals = $user->getGoals()->filter(static fn ($goal): bool => ($goal->getPercentage() > 35 && $goal->getPercentage() <100));
         //bottomGoals = obiettivi sotto il 20
         $bottomGoals = $user->getGoals()->filter(static fn ($goal): bool => $goal->getPercentage() < 20);
 
@@ -106,24 +109,33 @@ final class PrivateareaController extends AbstractController
 
         $data = json_decode($request->getContent(), true);
 
-        $attivita = new Activity();
-        $attivita->setTipo($data['tipo']); // normale, grassa, ecc
-        $attivita->setData();        // data automatica
-        $attivita->setUser($this->getUser());
-        $attivita->setMinutiAtt($data['minutiAttivita'] * 10);
+        if($this->getUser()->getBasale() != null) {
+            $attivita = new Activity();
+            $attivita->setTipo($data['tipo']); // normale, grassa, ecc
+            $attivita->setData();        // data automatica
+            $attivita->setUser($this->getUser());
+            $attivita->setMinutiAtt($data['minutiAttivita'] * 10);
 
-        $em->persist($attivita);
-        $em->flush();
+            $em->persist($attivita);
+            $em->flush();
 
-        $calorie = $this->getCalorie();
+            $calorie = $this->getCalorie();
 
-        return new JsonResponse([
-            'status' => 'ok',
-            'id' => $attivita->getId(),
-            'carboidrati' => $calorie['carboidrati'],
-            'grassi' => $calorie['grassi'],
-            'proteine' => $calorie['proteine'],
-        ]);
+            return new JsonResponse([
+                'status' => 'ok',
+                'id' => $attivita->getId(),
+                'carboidrati' => $calorie['carboidrati'],
+                'grassi' => $calorie['grassi'],
+                'proteine' => $calorie['proteine'],
+            ]);
+        }
+        else{
+            return new JsonResponse([
+                'status' => 'error',
+                'error' => 'Prima di poter inserire pasti o attività inserisci i tuoi parametri nella sezione Account/EmailAccount'
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
     }
 
     #[Route('/account/create', name: 'account_create', methods: ['POST'])]
@@ -219,31 +231,40 @@ final class PrivateareaController extends AbstractController
 
         $data = json_decode($request->getContent(), true);
 
-        $pasto = new Pasto();
-        $pasto->setPasto($data['pasto']);      // colazione, pranzo, cena
-        $pasto->setTipo($data['tipo']); // normale, grassa, ecc
-        $pasto->setGiorno();        // data automatica
-        $pasto->setUser($this->getUser());
+        if($this->getUser()->getBasale() != null) {
+            $pasto = new Pasto();
+            $pasto->setPasto($data['pasto']);      // colazione, pranzo, cena
+            $pasto->setTipo($data['tipo']); // normale, grassa, ecc
+            $pasto->setGiorno();        // data automatica
+            $pasto->setUser($this->getUser());
 
-        $em->persist($pasto);
-        $em->flush();
+            $em->persist($pasto);
+            $em->flush();
 
-        $calorie = $this->getCalorie();
+            $calorie = $this->getCalorie();
 
-        return new JsonResponse([
-            'status' => 'ok',
-            'id' => $pasto->getId(),
-            'carboidrati' => $calorie['carboidrati'],
-            'grassi' => $calorie['grassi'],
-            'proteine' => $calorie['proteine'],
-        ]);
+            return new JsonResponse([
+                'status' => 'ok',
+                'id' => $pasto->getId(),
+                'carboidrati' => $calorie['carboidrati'],
+                'grassi' => $calorie['grassi'],
+                'proteine' => $calorie['proteine'],
+            ]);
+        }
+        else{
+            return new JsonResponse([
+                'status' => 'error',
+                'error' => 'Prima di poter inserire pasti o attività inserisci i tuoi parametri nella sezione Account/EmailAccount'
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+
     }
 
     private function getCalorie(): array{
 
         $user = $this->getUser();
         $calorieAttivita = 0;
-        $durataOre = 1;
 
         $attivitaGiornaliere = $this->activityRepository->findByDateField($user);
 
@@ -261,6 +282,7 @@ final class PrivateareaController extends AbstractController
                 case 'pallamano': $met = 8.0; break;
             }
 
+            $durataOre = $attivita->getMinutiAtt();
             $calorieAttivita += ($met * $user->getPeso() * $durataOre);
 
         }
@@ -329,6 +351,30 @@ final class PrivateareaController extends AbstractController
         ]);
     }
 
+    #[Route('/splinechart', name: 'lineChart', methods: ['GET'])]
+    public function lineChart(
+        Request $request,
+        EntityManagerInterface $em
+    ): JsonResponse {
+
+        if (!$this->getUser()){
+            return new JsonResponse([
+                'status' => 'error',
+                'error' => 'Utente non loggato'
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        $data = array_map(fn($row) => [
+            'data' => $row['data']->format('Y-m-d'), // ISO
+            'totale' => (int) $row['totale']
+        ], $this->datoRepository->getGoalsGroupedByDate($this->getUser()));
+
+        return new JsonResponse([
+            'status' => 'ok',
+            'data' => $data
+        ]);
+    }
+
     #[Route('/increment', name: 'goal_increment', methods: ['POST'])]
     public function increment(
         Request $request,
@@ -347,46 +393,192 @@ final class PrivateareaController extends AbstractController
         $user = $this->getUser();
         $goals = $user->getGoals();
         $saved = null;
+        $dati = $user->getDati();
 
-        for ($i = 0; $i < count($goals); $i++) {
-            if ($goals[$i]->getName() == "acqua" && $data['buttonType'] == "waterButton") {
-                $goals[$i]->setQuantity($goals[$i]->getQuantity() + $data['trueCount']);
-                $em->persist($goals[$i]);
-                $saved = $i;
-            }
-            else if ($goals[$i]->getName() == "sonno" && $data['buttonType'] == "sleepButton") {
-                $goals[$i]->setQuantity($goals[$i]->getQuantity() + $data['trueCount']);
-                $em->persist($goals[$i]);
-                $saved = $i;
-            }
-            else if ($goals[$i]->getName() == "sole" && $data['buttonType'] == "sunButton") {
-                $goals[$i]->setQuantity($goals[$i]->getQuantity() + $data['trueCount']);
-                $em->persist($goals[$i]);
-                $saved = $i;
-            }
-        }
+        if($goals->isEmpty()){
 
-        $em->flush();
+            if($dati->isEmpty()){
+                $datoAcqua = new Dato();
+                $datoAcqua->setUser($user);
+                if($data['buttonType'] == "waterButton"){
+                    $datoAcqua->setQuantità($data['trueCount']);
+                }
+                else{
+                    $datoAcqua->setQuantità(0);
+                }
+                $datoAcqua->setData();
+                $datoAcqua->setTipo("acqua");
+                $em->persist($datoAcqua);
 
-        if (is_null($saved)) {
+                $datoSonno = new Dato();
+                $datoSonno->setUser($user);
+                if($data['buttonType'] == "sleepButton"){
+                    $datoSonno->setQuantità($data['trueCount']);
+                }
+                else{
+                    $datoSonno->setQuantità(0);
+                }
+                $datoSonno->setData();
+                $datoSonno->setTipo("sonno");
+                $em->persist($datoSonno);
+
+                $datoSole = new Dato();
+                $datoSole->setUser($user);
+                if($data['buttonType'] == "sunButton"){
+                    $datoSole->setQuantità($data['trueCount']);
+                }
+                else{
+                    $datoSole->setQuantità(0);
+                }
+                $datoSole->setData();
+                $datoSole->setTipo("sole");
+                $em->persist($datoSole);
+
+                $em->flush();
+
+            }
+
+            if(!$dati->isEmpty()){
+
+                $presenteAcqua = false;
+
+                for($i = 0; $i < count($dati); $i++){
+
+                    if($dati[$i]->getTipo() == "acqua" && $data['buttonType'] == "waterButton" && $dati[$i]->getData()->format('Y-m-d') === (new \DateTime())->format('Y-m-d')){
+                        $dati[$i]->setQuantità($dati[$i]->getQuantità() + $data['trueCount']);
+                    }
+                    else if($dati[$i]->getTipo() == "acqua" && $data['buttonType'] == "waterButton" && $dati[$i]->getData()->format('Y-m-d') === (new \DateTime('-1 day'))->format('Y-m-d')){
+                        $presenteAcqua = true;
+                    }
+
+                }
+
+                if($presenteAcqua){
+                    $datoAcqua = new Dato();
+                    $datoAcqua->setUser($user);
+                    $datoAcqua->setQuantità($data['trueCount']);
+                    $datoAcqua->setData();
+                    $datoAcqua->setTipo("acqua");
+                    $em->persist($datoAcqua);
+                }
+
+                $em->flush();
+
+            }
+
             return new JsonResponse([
-                'status' => 'error',
-                'error' => 'Obiettivo non corretto'
-            ], Response::HTTP_BAD_REQUEST);
+                'status' => 'ok',
+            ]);
+
         }
+        else {
 
-        $completed = false;
+            if($dati->isEmpty()){
 
-        if ($goals[$saved]->getQuantity() >= $goals[$saved]->getGoalQuantity()) {
-            $completed = true;
+                $datoAcqua = new Dato();
+                $datoAcqua->setUser($user);
+                if($data['buttonType'] == "waterButton"){
+                    $datoAcqua->setQuantità($data['trueCount']);
+                }
+                else{
+                    $datoAcqua->setQuantità(0);
+                }
+                $datoAcqua->setData();
+                $datoAcqua->setTipo("acqua");
+                $em->persist($datoAcqua);
+
+                $datoSonno = new Dato();
+                $datoSonno->setUser($user);
+                if($data['buttonType'] == "sleepButton"){
+                    $datoSonno->setQuantità($data['trueCount']);
+                }
+                else{
+                    $datoSonno->setQuantità(0);
+                }
+                $datoSonno->setData();
+                $datoSonno->setTipo("sonno");
+                $em->persist($datoSonno);
+
+                $datoSole = new Dato();
+                $datoSole->setUser($user);
+                if($data['buttonType'] == "sunButton"){
+                    $datoSole->setQuantità($data['trueCount']);
+                }
+                else{
+                    $datoSole->setQuantità(0);
+                }
+                $datoSole->setData();
+                $datoSole->setTipo("sole");
+                $em->persist($datoSole);
+
+                $em->flush();
+
+            }
+
+            if(!$dati->isEmpty()){
+
+                $presente = false;
+
+                for($i = 0; $i < count($dati); $i++){
+
+                    if($dati[$i]->getTipo() == "acqua" && $data['buttonType'] == "waterButton" && $dati[$i]->getData()->format('Y-m-d') === (new \DateTime())->format('Y-m-d')){
+                        $dati[$i]->setQuantità($dati[$i]->getQuantità() + $data['trueCount']);
+                    }
+                    else if($dati[$i]->getTipo() == "acqua" && $data['buttonType'] == "waterButton" && $dati[$i]->getData()->format('Y-m-d') === (new \DateTime('-1 day'))->format('Y-m-d')){
+                        $presente = true;
+                    }
+
+                }
+
+                if($presente){
+                    $datoAcqua = new Dato();
+                    $datoAcqua->setUser($user);
+                    $datoAcqua->setQuantità($data['trueCount']);
+                    $datoAcqua->setData();
+                    $datoAcqua->setTipo("acqua");
+                    $em->persist($datoAcqua);
+                }
+
+            }
+
+            for ($i = 0; $i < count($goals); $i++) {
+                if ($goals[$i]->getName() == "acqua" && $data['buttonType'] == "waterButton") {
+                    $goals[$i]->setQuantity($goals[$i]->getQuantity() + $data['trueCount']);
+                    $em->persist($goals[$i]);
+                    $saved = $i;
+                } else if ($goals[$i]->getName() == "sonno" && $data['buttonType'] == "sleepButton") {
+                    $goals[$i]->setQuantity($goals[$i]->getQuantity() + $data['trueCount']);
+                    $em->persist($goals[$i]);
+                    $saved = $i;
+                } else if ($goals[$i]->getName() == "sole" && $data['buttonType'] == "sunButton") {
+                    $goals[$i]->setQuantity($goals[$i]->getQuantity() + $data['trueCount']);
+                    $em->persist($goals[$i]);
+                    $saved = $i;
+                }
+            }
+
+            $em->flush();
+
+            if (is_null($saved)) {
+                return new JsonResponse([
+                    'status' => 'error',
+                    'error' => 'Obiettivo non corretto'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
+            $completed = false;
+
+            if ($goals[$saved]->getQuantity() >= $goals[$saved]->getGoalQuantity()) {
+                $completed = true;
+            }
+
+            return new JsonResponse([
+                'status' => 'ok',
+                'id' => $goals[$saved]->getId(),
+                'completed' => $completed,
+                'percentage' => $goals[$saved]->getPercentage()
+            ]);
         }
-
-        return new JsonResponse([
-            'status' => 'ok',
-            'id' => $goals[$saved]->getId(),
-            'completed' => $completed,
-            'percentage' => $goals[$saved]->getPercentage()
-        ]);
     }
 
 }

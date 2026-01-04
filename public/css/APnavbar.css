@@ -62,8 +62,8 @@
 }
 
 .layout.has-sidebar .sidebar.collapsed~.content {
-    margin-left: 60px;
-    width: calc(100% - 60px);
+    margin-left: 170px;
+    width: calc(100% - 120px);
 }
 
 .layout.has-sidebar .sidebar.toggled {

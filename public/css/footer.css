@@ -1,7 +1,7 @@
 footer {
   /* important! */
-  bottom: 0;
-  height: 64px; /* height = body margin-bottom */
+  top:1600px;
+  height: 128px; /* height = body margin-bottom */
   position: absolute;
   width: 100%;
 
@@ -42,10 +42,15 @@ footer {
 
 
     @media (max-width: 1500px) {
-    main {
-        }
+        footer{
+            top:1705px;
+        }    
+    }
 
-        
+    @media (max-width: 1350px) {
+        footer{
+            top:2395px;
+        }    
     }
 
     

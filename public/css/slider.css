@@ -156,7 +156,7 @@
         top: 390px;
         width: 95vw;
         height: 400px;
-        left: 3vw;
+        left: 1.75vw;
     }
     
     .slider__arrow {
@@ -169,4 +169,5 @@
         font-size: 1.4rem;
     }
 }
+
 

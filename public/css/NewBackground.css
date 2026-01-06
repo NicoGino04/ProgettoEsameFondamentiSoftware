@@ -53,7 +53,8 @@ html {
 @media (max-width: 1500px) {
   #title1 {
     white-space: nowrap;
-    top: 900px;
+    top: 930px;
+    left: 20vw;
     text-align: center;
     left: 50.5%;
     transform: translate(-50%, -50%);

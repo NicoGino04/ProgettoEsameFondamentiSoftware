@@ -3,12 +3,10 @@ footer {
   top:1600px;
   height: 128px; /* height = body margin-bottom */
   position: absolute;
-  width: 100%;
-
+  width: 105%;
   /* optional */
-  border-top: 1px solid lightgrey;
   text-align: center;
-  background-color: aliceblue;
+  background-color: transparent;
 }
 
         .footer .social-icons {

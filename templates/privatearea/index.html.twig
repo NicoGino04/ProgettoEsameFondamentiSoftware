@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="css/APgenerale.css">
 <link rel="stylesheet" href="css/APnavbar.css">
 <link rel="stylesheet" href="css/APmealcard.css">
+<link rel="stylesheet" href="css/APkcal.css">
 <link rel="stylesheet" href="css/APcard.css">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -198,7 +199,13 @@
                                         </div>
                                     </div>
                                     <div class="donut-card-body">
-                                        <canvas id="myDoughnutChart"></canvas>
+                                        <div class="donut-wrapper">
+                                            <canvas id="myDoughnutChart"></canvas>
+                                            <div class="donut-center">
+                                                <strong id="cal-attuali">1200 kcal</strong>
+                                                <span>di 2000 kcal</span>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="card-footer">

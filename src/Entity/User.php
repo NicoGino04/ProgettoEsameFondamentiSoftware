@@ -74,11 +74,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Activity::class, mappedBy: 'user')]
     private Collection $activities;
 
+    /**
+     * @var Collection<int, Dato>
+     */
+    #[ORM\OneToMany(targetEntity: Dato::class, mappedBy: 'user')]
+    private Collection $dati;
+
     public function __construct()
     {
         $this->goals = new ArrayCollection();
         $this->pasto = new ArrayCollection();
         $this->activities = new ArrayCollection();
+        $this->dati = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -331,6 +338,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($activity->getUser() === $this) {
                 $activity->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Dato>
+     */
+    public function getDati(): Collection
+    {
+        return $this->dati;
+    }
+
+    public function addDati(Dato $dati): static
+    {
+        if (!$this->dati->contains($dati)) {
+            $this->dati->add($dati);
+            $dati->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDati(Dato $dati): static
+    {
+        if ($this->dati->removeElement($dati)) {
+            // set the owning side to null (unless already changed)
+            if ($dati->getUser() === $this) {
+                $dati->setUser(null);
             }
         }
 

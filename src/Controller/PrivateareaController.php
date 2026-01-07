@@ -71,9 +71,13 @@ final class PrivateareaController extends AbstractController
         $bottomGoals = $bottomGoals->matching($criteria);
         */
 
+        $calorie = $this->getCalorie();
+
         return $this->render('privatearea/index.html.twig', [
             'topGoals' => $topGoals,
             'bottomGoals' => $bottomGoals,
+            'caloriePasti' => $calorie['kcalTot'],
+            'valoreGiornaliero' => $calorie['valoreGiornaliero'],
             'controller_name' => 'PrivateareaController',
         ]);
     }
@@ -243,12 +247,28 @@ final class PrivateareaController extends AbstractController
 
             $calorie = $this->getCalorie();
 
+            if($calorie['completato']) {
+                $obiettivi = $this->getUser()->getGoals();
+                foreach ($obiettivi as $obiettivo) {
+                    if ($obiettivo->getName() == 'nutrizione') {
+                        $obiettivo->setQuantity($obiettivo->getQuantity() + 1);
+
+                        $em->persist($obiettivo);
+                        $em->flush();
+                    }
+                }
+            }
+
             return new JsonResponse([
                 'status' => 'ok',
                 'id' => $pasto->getId(),
                 'carboidrati' => $calorie['carboidrati'],
                 'grassi' => $calorie['grassi'],
                 'proteine' => $calorie['proteine'],
+                'completato' => $calorie['completato'],
+                'troppo' => $calorie['troppo'],
+                'kcalTot' => $calorie['kcalTot'],
+                'valoreGiornaliero'=> $calorie['valoreGiornaliero']
             ]);
         }
         else{
@@ -294,6 +314,9 @@ final class PrivateareaController extends AbstractController
         $kcal_carbo = 0;
         $kcal_grassi = 0;
         $kcal_proteine = 0;
+        $kcalTot = 0;
+        $completato = false;
+        $troppo = false;
 
         foreach ($pastiGiornalieri as $pasto){
 
@@ -308,23 +331,36 @@ final class PrivateareaController extends AbstractController
                 case 'normale' :
                 case 'leggera' :
                 case 'abbondante' : $percCarbo = 58; $percGrassi = 26; $percProteine = 16; break;
-                case 'proteico' : $percCarbo = 25; $percGrassi = 30; $percProteine = 45; break;
-                case 'grassa' : $percCarbo = 20; $percGrassi = 55; $percProteine = 25; break;
-                case 'light' : $percCarbo = 40; $percGrassi = 35; $percProteine = 25; break;
+                case 'proteico' : $percCarbo = 37; $percGrassi = 23; $percProteine = 40; break;
+                case 'grassa' : $percCarbo = 40; $percGrassi = 40; $percProteine = 20; break;
+                case 'light' : $percCarbo = 50; $percGrassi = 18; $percProteine = 32; break;
                 default : $percCarbo = 0; $percGrassi = 0; $percProteine = 0; break;
             }
 
             $kcal = ($valoreGiornaliero * $percPasto) / 100;
+            $kcalTot = $kcalTot + $kcal;
             $kcal_carbo = $kcal_carbo + ($kcal * $percCarbo) / 100;
             // $grammi_carbo = $kcal_carbo_colazione/4;
             $kcal_grassi = $kcal_grassi + ($kcal * $percGrassi) / 100;
             $kcal_proteine = $kcal_proteine + ($kcal * $percProteine) / 100;
 
         }
+
+        if($kcalTot == $valoreGiornaliero){
+            $completato = true;
+        }
+        else if($kcalTot >= $valoreGiornaliero + 100){
+            $troppo = true;
+        }
+
         return [
             'carboidrati' => $kcal_carbo,
             'grassi' => $kcal_grassi,
-            'proteine' => $kcal_proteine
+            'proteine' => $kcal_proteine,
+            'completato' => $completato,
+            'troppo' => $troppo,
+            'kcalTot' => $kcalTot,
+            'valoreGiornaliero'=> $valoreGiornaliero
         ];
     }
 
@@ -572,11 +608,24 @@ final class PrivateareaController extends AbstractController
                 $completed = true;
             }
 
+            $isTopGoal = false;
+
+            if ($goals[$saved]->getPercentage() > 35) {
+                $isTopGoal = true;
+            }
+
             return new JsonResponse([
                 'status' => 'ok',
                 'id' => $goals[$saved]->getId(),
                 'completed' => $completed,
-                'percentage' => $goals[$saved]->getPercentage()
+                'percentage' => $goals[$saved]->getPercentage(),
+                'isTopGoal' => $isTopGoal,
+                'goal' => [
+                    'id' => $goals[$saved]->getId(),
+                    'name' => $goals[$saved]->getName(),
+                    'goalQuantity' => $goals[$saved]->getGoalQuantity(),
+                    'percentage' => $goals[$saved]->getPercentage()
+                 ]
             ]);
         }
     }

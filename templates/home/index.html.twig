@@ -34,7 +34,7 @@
     <nav id="menu">
         <div class="menu-item1">
             <div class="menu-text">
-                <a href="#" aria-label="Home"><img style="max-width: 100px; min-width: 100px;position: relative; top: -30px;" src="{{asset('images/icons/FITCENTER5.png')}}"></a>
+                <a href="#"><img src="{{ asset('images/landing/FIT CENTER5.png') }}" class="img-box"></a>
             </div>
         </div>
 
@@ -120,7 +120,7 @@
 
         {% if app.user %}
 
-        <div class="menu-item1">
+        <div class="menu-item2">
             <div class="menu-text">
                 <a href="{{ path('app_privatearea') }}">Area privata</a>
             </div>
@@ -130,7 +130,7 @@
 
         {% if not app.user %}
 
-        <div class="menu-item1">
+        <div class="menu-item2">
             <div class="menu-text">
                 <a href="{{ path('app_login') }}">Accedi</a>
             </div>

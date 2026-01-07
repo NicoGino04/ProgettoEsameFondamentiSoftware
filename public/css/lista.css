@@ -41,8 +41,7 @@ nav {
 }
 
 
-nav .menu-item,
-nav .menu-item1 {
+nav .menu-item{
     z-index: 9999;
     color: #fff;
     font-weight: 600;
@@ -56,6 +55,38 @@ nav .menu-item1 {
     transform-style: preserve-3d;
     perspective: 200px;
 }
+
+nav .menu-item1 {
+    z-index: 9999;
+    color: #fff;
+    font-weight: 600;
+    flex-grow: 1;
+    flex-basis: var(--item-width);
+    display: flex;
+    justify-content: center;
+    padding: 0em 1.5em;
+    min-height: 7.5em;
+    letter-spacing: 0.5px;
+    transform-style: preserve-3d;
+    perspective: 200px;
+}
+
+nav .menu-item2 {
+    z-index: 9999;
+    color: #fff;
+    font-weight: 600;
+    flex-grow: 1;
+    flex-basis: var(--item-width);
+    display: flex;
+    justify-content: center;
+    padding: 1em 1.5em;
+    min-height: 7.5em;
+    letter-spacing: 0.5px;
+    transform-style: preserve-3d;
+    perspective: 200px;
+}
+
+
 
 
 nav .menu-text,
@@ -372,4 +403,15 @@ nav .menu-item.highlight:hover ~ #sub-menu-container #sub-menu-holder #sub-menu-
 
 .sub-menu .box a:hover {
     color: var(--color-text);
+}
+
+
+.img-box{
+  max-width: 70px; /* opzionale */
+}
+
+.img-box img{
+  width: 100%;
+  height: auto;
+  display: block; /* evita spazi sotto l'immagine */
 }

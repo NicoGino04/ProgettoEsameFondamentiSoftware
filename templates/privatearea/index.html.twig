@@ -31,14 +31,14 @@
                 <nav class="menu open-current-submenu">
                     <ul>
                         <li class="menu-header"><span> GENERALE </span></li>
-                        
+
                         <li class="menu-item">
                             <a href="{{path("app_privatearea")}}">
                                 <span class="menu-icon">
                                     <i class="ri-home-2-fill"></i>
                                 </span>
                                 <span class="menu-title">Home</span>
-                                
+
                             </a>
                         </li>
 
@@ -96,12 +96,12 @@
                                             <span class="menu-title">Obbiettivi</span>
                                         </a>
                                     </li>
-                                    
+
                                 </ul>
                             </div>
                         </li>
-                        
-                        
+
+
                         <li class="menu-header" style="padding-top: 20px"><span> EXTRA </span></li>
                         <li class="menu-item sub-menu">
                             <a href="#">
@@ -152,7 +152,7 @@
                             </div>
                         </li>
 
-                        
+
                     </ul>
                 </nav>
             </div>
@@ -202,8 +202,8 @@
                                         <div class="donut-wrapper">
                                             <canvas id="myDoughnutChart"></canvas>
                                             <div class="donut-center">
-                                                <strong id="cal-attuali">1200 kcal</strong>
-                                                <span>di 2000 kcal</span>
+                                                <strong id="cal-attuali">{{ caloriePasti }}</strong>
+                                                <span>di {{ valoreGiornaliero }} kcal</span>
                                             </div>
                                         </div>
                                     </div>
@@ -369,8 +369,8 @@
                                                  <span id="activityCount" class="count">0</span>
                                                  <button class="increase">+</button>
                                              </div>
-                                                
-                                            
+
+
 
                                             <div class="card-footer">
                                                 <button disabled id="save_activity" class="save-btn">Salva</button>
@@ -386,7 +386,7 @@
 
                         <footer class="footer">
                             <small style="margin-bottom: 20px; display: inline-block">
-                                © 2025 realizzato con <3 da - Gruppo 11 
+                                © 2025 realizzato con <3 da - Gruppo 11
                             </small>
                             <br />
                             <div class="social-links">
@@ -540,6 +540,8 @@
                     })
                     .then(data => {
                         console.log('Salvato:', data);
+                        console.log('cal pasti di oggi:',data.kcalTot);
+                        console.log('valore giornaliero:',data.valoreGiornaliero);
 
                         chart.data.datasets[0].data = [
                             data.carboidrati,
@@ -549,15 +551,41 @@
 
                         chart.update();
 
-                        Swal.fire({
-                            toast: true,
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'Pasto creato con successo',
-                            showConfirmButton: false,
-                            timer: 3000,
-                            timerProgressBar: true
-                        });
+                        document.getElementById('cal-attuali').innerText = Math.round(data.kcalTot * 100)/100;
+
+                        if(data.completato){
+                            Swal.fire({
+                                toast: true,
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Hai completato il/un tuo obiettivo nutrizionale',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true
+                            });
+                        }
+                        else if(data.troppo){
+                            Swal.fire({
+                                toast: true,
+                                position: 'top-end',
+                                icon: 'error',
+                                title: 'Stai superando la tua soglia giornaliera, attento!',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true
+                            });
+                        }
+                        else {
+                            Swal.fire({
+                                toast: true,
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Pasto creato con successo',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true
+                            });
+                        }
 
                     })
                     .catch(error => {

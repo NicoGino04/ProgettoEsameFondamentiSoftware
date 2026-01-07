@@ -69,9 +69,36 @@ document.addEventListener('DOMContentLoaded', () => {
                             });
                         }
 
+                        const pbContainer = document.querySelector('.cardPB-body');
+                        if (data.isTopGoal) {
+                            // evita duplicati
+                            if (!document.querySelector(`.pb-item[data-goal-id="${data.goal.id}"]`)) {
+
+                                const div = document.createElement('div');
+                                div.classList.add('pb-item');
+                                div.dataset.goalId = data.goal.id;
+
+                                div.innerHTML = `
+                                <label>${data.goal.name} (${data.goal.goalQuantity})</label>
+                                <progress
+                                    value="${data.goal.percentage}"
+                                    max="100"
+                                    style="--value: ${data.goal.percentage}; --max: 100;">
+                                </progress>
+                                `;
+
+                                pbContainer.appendChild(div);
+                            }
+                        }
+
                         const el = document.querySelector(`.pb-item[data-goal-id="${data.id}"]`);
                         console.log(el)
                         if (el){
+
+                            if(data.completed || data.percentage > 100){
+                                el.remove();
+                            }
+
                             const value = data.percentage > 100 ? 100 : data.percentage;
                             el.querySelector('progress').style.setProperty('--value',value);
                         }

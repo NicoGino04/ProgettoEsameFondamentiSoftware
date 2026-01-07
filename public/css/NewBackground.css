@@ -7,7 +7,7 @@ html {
 #title {
     position: absolute;
     top: 360px;
-    left: 20.04vw;
+    left: 26.04vw;
     color: #ffe894;
     text-align: right;
     font-family: "lato", sans-serif;
@@ -46,16 +46,17 @@ html {
     margin-top: -60px;
     padding-left: 16px;
     text-align: center;
-    left: 50.5%;
+    left: 50%;
     transform: translate(-50%, -50%);
 }
 
 @media (max-width: 1500px) {
   #title1 {
     white-space: nowrap;
-    top: 900px;
+    top: 930px;
+    left: 20vw;
     text-align: center;
-    left: 50.5%;
+    left: 50%;
     transform: translate(-50%, -50%);
   }
 }

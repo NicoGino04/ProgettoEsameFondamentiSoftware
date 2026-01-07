@@ -213,7 +213,7 @@ body {
     color: #666;
 }
 .meal-selector-card {
-    grid-column: span 3; /* occupa 2 colonne su desktop */
+    grid-column: span 3; /* occupa 3 colonne su desktop */
 }
 .dashboard-left {
     display: flex;

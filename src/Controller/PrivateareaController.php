@@ -87,6 +87,7 @@ final class PrivateareaController extends AbstractController
     {
         return $this->render('privatearea/account.html.twig', [
             'controller_name' => 'PrivateareaController',
+            'user' => $this->getUser(),
         ]);
     }
 
@@ -293,17 +294,17 @@ final class PrivateareaController extends AbstractController
             switch ($attivita->getTipo()){
                 case 'nuoto': $met = 6.0; break;
                 case 'camminata': $met = 3.5; break;
-                case 'corsa': $met = 8.0; break;
-                case 'basket': $met = 8.0; break;
+                case 'corsa': $met = 9.0; break;
+                case 'basket': $met = 6.0; break;
                 case 'pallavolo': $met = 4.0; break;
                 case 'calcio': $met = 7.0; break;
-                case 'tennis': $met = 7.3; break;
+                case 'tennis': $met = 7.0; break;
                 case 'padel': $met = 6.0; break;
-                case 'pallamano': $met = 8.0; break;
+                case 'pallamano': $met = 10.0; break;
             }
 
             $durataOre = $attivita->getMinutiAtt();
-            $calorieAttivita += ($met * $user->getPeso() * $durataOre);
+            $calorieAttivita += ($met * $user->getPeso() * $durataOre)/60;
 
         }
 

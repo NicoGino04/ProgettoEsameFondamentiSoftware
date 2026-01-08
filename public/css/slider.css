@@ -56,7 +56,11 @@
     opacity: 0;
     transition: all 0.4s ease;
 }
-
+.slider__content span{
+    background: -webkit-linear-gradient(white, #f5f6f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 .slider__slide.active .slider__content {
     transform: translateY(0);
     opacity: 1;

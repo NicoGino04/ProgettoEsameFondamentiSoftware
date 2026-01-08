@@ -38,8 +38,8 @@ html {
 #title1 {
     position: absolute;
     top: 825px;
-    color: #ffe894;
-    font-family: "lato", sans-serif;
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
     font-weight: 300;
     font-size: 58.6px;
     letter-spacing: 3.2px;
@@ -62,7 +62,7 @@ html {
 }
 
 #title1 span {
-    background: -webkit-linear-gradient(white, #38495a);
+    background: -webkit-linear-gradient(white, #fff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }

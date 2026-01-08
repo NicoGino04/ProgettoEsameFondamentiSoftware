@@ -407,7 +407,8 @@ nav .menu-item.highlight:hover ~ #sub-menu-container #sub-menu-holder #sub-menu-
 
 
 .img-box{
-  max-width: 70px; /* opzionale */
+  max-width: 100px; /* opzionale */
+  
 }
 
 .img-box img{

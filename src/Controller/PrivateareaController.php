@@ -36,7 +36,7 @@ final class PrivateareaController extends AbstractController
         //$goals = $user->getGoals()->slice(0,5);
         /* @var Goal $goal */
         //topGoals = obiettivi sopra il 35%
-        $topGoals = $user->getGoals()->filter(static fn ($goal): bool => ($goal->getPercentage() > 35 && $goal->getPercentage() <100));
+        $topGoals = $user->getGoals()->filter(static fn ($goal): bool => ($goal->getPercentage() <100));
         //bottomGoals = obiettivi sotto il 20
         $bottomGoals = $user->getGoals()->filter(static fn ($goal): bool => $goal->getPercentage() < 20);
 
@@ -132,6 +132,8 @@ final class PrivateareaController extends AbstractController
                 'carboidrati' => $calorie['carboidrati'],
                 'grassi' => $calorie['grassi'],
                 'proteine' => $calorie['proteine'],
+                'kcalTot' => $calorie['kcalTot'],
+                'valoreGiornaliero'=> $calorie['valoreGiornaliero']
             ]);
         }
         else{
@@ -347,7 +349,7 @@ final class PrivateareaController extends AbstractController
 
         }
 
-        if($kcalTot == $valoreGiornaliero){
+        if($kcalTot>= $valoreGiornaliero - 200 && $kcalTot<= $valoreGiornaliero + 200){
             $completato = true;
         }
         else if($kcalTot >= $valoreGiornaliero + 100){
@@ -565,9 +567,31 @@ final class PrivateareaController extends AbstractController
                         $presente = true;
                     }
 
+                    if($dati[$i]->getTipo() == "sonno" && $data['buttonType'] == "sleepButton" && $dati[$i]->getData()->format('Y-m-d') === (new \DateTime())->format('Y-m-d')){
+                        $dati[$i]->setQuantità($dati[$i]->getQuantità() + $data['trueCount']);
+                    }
+                    else if($dati[$i]->getTipo() == "sonno" && $data['buttonType'] == "sleepButton" && $dati[$i]->getData()->format('Y-m-d') === (new \DateTime('-1 day'))->format('Y-m-d')){
+                        $presente = true;
+                    }
+
+                    if($dati[$i]->getTipo() == "sole" && $data['buttonType'] == "sunButton" && $dati[$i]->getData()->format('Y-m-d') === (new \DateTime())->format('Y-m-d')){
+                        $dati[$i]->setQuantità($dati[$i]->getQuantità() + $data['trueCount']);
+                    }
+                    else if($dati[$i]->getTipo() == "sole" && $data['buttonType'] == "sunButton" && $dati[$i]->getData()->format('Y-m-d') === (new \DateTime('-1 day'))->format('Y-m-d')){
+                        $presente = true;
+                    }
+
                 }
 
                 if($presente){
+                    $datoAcqua = new Dato();
+                    $datoAcqua->setUser($user);
+                    $datoAcqua->setQuantità($data['trueCount']);
+                    $datoAcqua->setData();
+                    $datoAcqua->setTipo("acqua");
+                    $em->persist($datoAcqua);
+                }
+                else{
                     $datoAcqua = new Dato();
                     $datoAcqua->setUser($user);
                     $datoAcqua->setQuantità($data['trueCount']);
@@ -599,7 +623,7 @@ final class PrivateareaController extends AbstractController
             if (is_null($saved)) {
                 return new JsonResponse([
                     'status' => 'error',
-                    'error' => 'Obiettivo non corretto'
+                    'error' => 'Non hai obiettivi di questo tipo ma i tuoi dati verranno registrati'
                 ], Response::HTTP_BAD_REQUEST);
             }
 
@@ -611,9 +635,25 @@ final class PrivateareaController extends AbstractController
 
             $isTopGoal = false;
 
-            if ($goals[$saved]->getPercentage() > 35) {
-                $isTopGoal = true;
+            $topGoals = $user->getGoals()->filter(static fn ($goal): bool => ($goal->getPercentage() <100));
+
+            $topGoals = $topGoals->toArray();
+
+            usort($topGoals, function (Goal $a, Goal $b): int {
+                $valA = $a->getPercentage();
+                $valB = $b->getPercentage();
+                return $valB - $valA;
+            });
+
+            foreach ($topGoals as $goal) {
+                if ($goals[$saved] == $goal) {
+                    $isTopGoal = true;
+                }
             }
+
+//            if ($goals[$saved]->getPercentage() > 35) {
+//                $isTopGoal = true;
+//            }
 
             return new JsonResponse([
                 'status' => 'ok',

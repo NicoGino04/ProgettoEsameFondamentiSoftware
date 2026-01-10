@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -46,13 +47,28 @@ class RegistrationFormType extends AbstractType
                 'constraints' => [
                     new NotBlank(message: 'Inserisci una password.'),
                     new Length(
-                        min:6, 
-                        max:16, 
-                        minMessage:'La tua password dovrebbe essere di almeno {{ limit }} caratteri', 
+                        min:6,
+                        max:16,
+                        minMessage:'La tua password dovrebbe essere di almeno {{ limit }} caratteri',
                         maxMessage:'La tua password non può essere più lunga di {{ limit }} caratteri'
                     ),
                 ],
 
+            ])
+            ->add('username', TextType::class, [
+                'label' => false,
+                'attr'=>[
+                    'placeholder' => 'Username'
+                ],
+                'constraints'=> [
+                    new NotBlank(message: 'Inserisci uno username'),
+                    new Length(
+                        min: 3,
+                        max: 20,
+                        minMessage: 'Lo username deve avere almeno {{ limit }} caratteri',
+                        maxMessage: 'Lo username non può superare {{ limit }} caratteri'
+                    )
+                ]
             ])
         ;
     }

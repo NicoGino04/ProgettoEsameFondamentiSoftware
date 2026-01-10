@@ -62,6 +62,32 @@ form[name="registration_form"] {
     font-weight: 500;
 }
 
+#registration_form_username {
+    width: 100%;
+    height: 50px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #2EBBC6;
+    color: black;
+    font-size: 1rem;
+    font-weight: 500;
+    box-sizing: border-box;
+    padding-left: 30px;
+    transition: border-bottom .4s;
+}
+
+#registration_form_username:focus {
+    outline: none;
+    border-bottom: 2px solid #173f7a;
+    transition: border-bottom .4s;
+}
+
+#registration_form_username::placeholder {
+    color: rgb(80, 80, 80);
+    font-size: 1rem;
+    font-weight: 500;
+}
+
 #registration_form_plainPassword {
     width: 100%;
     height: 50px;
@@ -89,7 +115,7 @@ form[name="registration_form"] {
 }
 
 
-/*nel seguente caso il selettore # ci selezione direttamente e solo l'elemento con 
+/*nel seguente caso il selettore # ci selezione direttamente e solo l'elemento con
 id=button*/
 
 #button {

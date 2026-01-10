@@ -20,6 +20,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     });
 
+    document.querySelectorAll('.card[data-counter="false"]').forEach(card => {
+        const countEl = card.querySelector('.count');
+        const btnInc = card.querySelector('.increase');
+        const btnDec = card.querySelector('.decrease');
+
+        if (!countEl || !btnInc || !btnDec) return;
+
+        let count = 0;
+        card.dataset.count = count;
+
+        btnInc.addEventListener('click', () => {
+            count++;
+            card.dataset.count = count;
+            countEl.textContent = (count * 10) + ' min';
+        });
+
+        btnDec.addEventListener('click', () => {
+            if (count > 0) count--;
+            countEl.textContent = count;
+        });
+
+    });
+
     document.querySelectorAll('.card[data-type="goals-card"]').forEach(card => {
         const btnSave = card.querySelector('.save-btn');
         const countEl = card.querySelector('.count');
@@ -107,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     .catch(error => {
                         console.error('Errore:', error);
                         Swal.fire({
-                            icon: 'error',
+                            icon: 'info',
                             title: error.message,
                             confirmButtonColor: '#d33'
                         });
@@ -116,5 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+
+
 
 });

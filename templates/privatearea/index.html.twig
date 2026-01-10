@@ -20,7 +20,7 @@
                 <div class="pro-sidebar-logo">
                     <img src="{{ asset('images/icons/FitCenterP.png') }}" alt="FitCenter" style="max-width: 80px; min-width: 80px;position: relative; right: 20px;" />
                     <h5>Ciao, <br>
-                        {{ app.user.email }}
+                        {{ app.user.username }}
                         {% for role in app.user.roles %}
                         {% endfor %}
                     </h5>
@@ -118,7 +118,7 @@
                                             <i class="ri-account-pin-circle-fill"></i>
                                         </span>
                                             <span class="menu-title">
-                                                {{ app.user.email }}
+                                                {{ app.user.username }}
                                                 {% for role in app.user.roles %}
                                                 {% endfor %}
                                             </span>
@@ -185,7 +185,7 @@
                                             <canvas id="myDoughnutChart"></canvas>
                                             <div class="donut-center">
                                                 <strong id="cal-attuali">{{ caloriePasti }}</strong>
-                                                <span>di {{ valoreGiornaliero }} kcal</span>
+                                                <span id="valoreGiorn">di {{ valoreGiornaliero }} kcal</span>
                                             </div>
                                         </div>
                                     </div>
@@ -320,7 +320,7 @@
                                                 <button disabled id="save_button" class="save-btn">Salva</button>
                                             </div>
                                         </article>
-                                         <article class="card meal-selector-card" data-type="activity-card" data-counter="true">
+                                         <article class="card meal-selector-card" data-type="activity-card" data-counter="false">
 
                                             <div class="meal-selector-header">
                                                 <span><img src="{{ asset('images/icons/iconAF4.png') }}" /></span>
@@ -368,7 +368,7 @@
 
                         <footer class="footer">
                             <small style="margin-bottom: 20px; display: inline-block">
-                                © 2025 realizzato con <3 da - Gruppo 10 
+                                © 2025 realizzato con <3 da - Gruppo 10
                             </small>
                             <br />
                             <div class="social-links">
@@ -431,7 +431,9 @@
         document.getElementById('save_activity').addEventListener('click',function(){
 
             const tipoAct = document.getElementById('attivita');
-            const minutiAttivita = document.getElementById('activityCount');
+            //const minutiAttivita = document.getElementById('activityCount');
+            const card = document.querySelector('.card[data-counter="false"]');
+            const minutiAttivita = card.dataset.count;
 
             if (tipoAct.value){
                 this.disabled = true;
@@ -444,7 +446,7 @@
                     },
                     body: JSON.stringify({
                         tipo: tipoAct.value,
-                        minutiAttivita : minutiAttivita.textContent
+                        minutiAttivita : minutiAttivita
                     })
                 })
                     .then(response => {
@@ -465,6 +467,9 @@
                         ]
 
                         chart.update();
+
+                        document.getElementById('cal-attuali').innerText = Math.round(data.kcalTot * 100)/100;
+                        document.getElementById('valoreGiorn').innerText = "di " + (Math.round(data.valoreGiornaliero * 100)/100);
 
                         Swal.fire({
                             toast: true,

@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let count = 0;
         card.dataset.count = count;
+        countEl.textContent = (count * 10) + ' min';
 
         btnInc.addEventListener('click', () => {
             count++;
@@ -38,7 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         btnDec.addEventListener('click', () => {
             if (count > 0) count--;
-            countEl.textContent = count;
+            card.dataset.count = count;
+            countEl.textContent = (count * 10) + ' min';
+
         });
 
     });
